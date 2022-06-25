@@ -15,6 +15,8 @@ from twilio.rest import Client
 from importlib_metadata import method_cache
 from werkzeug.utils import secure_filename
 from datetime import timedelta
+from dotenv import load_dotenv
+load_dotenv()
 
 cred = credentials.Certificate(os.getcwd()+"/serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
@@ -52,8 +54,8 @@ app.config['MAX_CONTENT_LENGTH'] = 2048 * 2048
 # app.config['MAX_CONTENT_LENGTH'] = 2048 * 2048
 
 
-TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
-TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
+TWILIO_ACCOUNT_SID = os.getenv["TWILIO_ACCOUNT_SID"]
+TWILIO_AUTH_TOKEN = os.getenv["TWILIO_AUTH_TOKEN"]
 # TWILIO_ACCOUNT_SID = "ACd810b5b1f702cb6ec0fa685d8dbda67a"
 # TWILIO_AUTH_TOKEN = "1b04b75c740c433afac0be72a77f3eb3"
 twilio_api = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
