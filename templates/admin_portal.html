@@ -246,7 +246,7 @@
        
         <td>{{row[7]}}</td>
         <td><a target="_blank" href="/exi?ph={{row[1]}}">view profile</a></td>
-        <td><a onclick="sms_sent()" href="/sms?ph={{row[1]}}" >Send Review SMS</a></td>
+        <td><a href="/sms?ph={{row[1]}}" >Send Review SMS</a></td>
       </tr>
       {% endfor %}
       {% else %}
@@ -386,8 +386,6 @@
         }
       }
     }
-function sms_sent()
-{alert('SMS Sent');}
 
   </script>
 
