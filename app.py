@@ -74,7 +74,7 @@ def sms():
                               from_='+18504092872',
                               to='+'+ph_no)
     print(message.sid)
-    fetch_sms()
+    # fetch_sms()
     return redirect(url_for('admin_render'))
 
 @app.route("/")
