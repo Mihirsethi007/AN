@@ -11,6 +11,7 @@ from flask_mysqldb import MySQL
 import firebase_admin
 from firebase_admin import auth, credentials
 import os
+from twilio.rest import Client
 from importlib_metadata import method_cache
 from werkzeug.utils import secure_filename
 from datetime import timedelta
@@ -30,19 +31,51 @@ firebase_admin.initialize_app(cred)
 app = Flask(__name__,template_folder='templates', static_folder='static')
 
 
+# app.config['SECRET_KEY']="sshhh"
+# app.config['MYSQL_HOST'] = 'us-cdbr-east-05.cleardb.net'
+# app.config['MYSQL_USER'] = 'ba5f66013cf0e7'
+# app.config['MYSQL_PASSWORD'] = 'ab61128c'
+# app.config['MYSQL_DB'] = 'heroku_0896b250d7433da'
+# app.config['UPLOAD_PATH'] = 'upload'
+# app.config['UPLOAD_EXTENSIONS'] = ['.pdf',',jpeg']
+# app.config['MAX_CONTENT_LENGTH'] = 2048 * 2048
+
+
+
 app.config['SECRET_KEY']="sshhh"
-app.config['MYSQL_HOST'] = 'us-cdbr-east-05.cleardb.net'
-app.config['MYSQL_USER'] = 'ba5f66013cf0e7'
-app.config['MYSQL_PASSWORD'] = 'ab61128c'
-app.config['MYSQL_DB'] = 'heroku_0896b250d7433da'
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'mihirbhai'
 app.config['UPLOAD_PATH'] = 'upload'
 app.config['UPLOAD_EXTENSIONS'] = ['.pdf',',jpeg']
 app.config['MAX_CONTENT_LENGTH'] = 2048 * 2048
 
+
+# TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
+# TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
+TWILIO_ACCOUNT_SID = "ACd810b5b1f702cb6ec0fa685d8dbda67a"
+TWILIO_AUTH_TOKEN = "1b04b75c740c433afac0be72a77f3eb3"
+twilio_api = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+
+
+def fetch_sms():
+    return twilio_api.messages.stream()
+
 # this variable, db, will be used for all SQLAlchemy commands
 mysql = MySQL(app)
 
-
+@app.route("/sms")
+def sms():
+    ph_no = request.args.get("ph")
+    print('+'+ph_no)
+    message = twilio_api.messages.create(
+                              body='Welcome to ANM Staffing! Your profile account is under review. We will get in touch asap.',
+                              from_='+18504092872',
+                              to='+'+ph_no)
+    print(message.sid)
+    fetch_sms()
+    return redirect(url_for('admin_render'))
 
 @app.route("/")
 def welcome():
@@ -59,7 +92,9 @@ def admin_render():
             # print(data)
             mysql.connection.commit()
             cursor.close()
+        
             return render_template("admin_portal.html", value=data)
+            
         return redirect(url_for('auth_render'))
 
 @app.route('/managerList', methods = ['POST', 'GET'])
@@ -98,7 +133,7 @@ def delete_manager():
 @app.route('/manager', methods = ['POST', 'GET'])
 def manager_render():
         # fields = request.args.get("ph")
-        if 'verno' in session:
+        # if 'verno' in session:
             cursor = mysql.connection.cursor()
             cursor.execute("select CONCAT_WS( ', ', ty_gn_hy1,ty_gn_hy2,ty_gn_hy3,ty_gn_hywal,ty_gn_hy4,ty_gn_hy5,ty_gn_hy6,ty_of_hy7 ), phn,name,address, contact_no, language, CONCAT_WS( ', ', ty_gn,ty_dr,ty_fl,ty_wal,ty_wel,ty_cnc,ty_wh,ty_of ),pref_loc from users") 
 
@@ -107,17 +142,12 @@ def manager_render():
             mysql.connection.commit()
             cursor.close()
             return render_template("manager_portal.html", value=data)
-        return redirect(url_for('auth_render')) 
+        # return redirect(url_for('auth_render')) 
 
 @app.route('/auth', methods = ['POST', 'GET'])
 def auth_render():
         return render_template('app.html')
 
-
-# def exist_user(id_token):
-#     decoded_token = auth.verify_id_token(id_token)
-#     uid = decoded_token['uid']
-## phone number of admin line 105
 @app.route('/token', methods = ['POST', 'GET'])
 def firebaseFunction():
     if request.method == 'POST':
@@ -128,15 +158,7 @@ def firebaseFunction():
         session['verno'] = decoded_token
         if(decoded_token=='19876543210'):
             return json.dumps({"url": 'admin'})
-        ###
-        # md = "select role from managers "
-        # print(cmd)
-        # cursor = mysql.connection.cursor()
-        # cursor.execute(cmd)
-        # data = cursor.fetchall()   
-        # mysql.connection.commit()
-        # cursor.close()
-        ###
+
         cursor = mysql.connection.cursor()
         cursor.execute(''' SELECT * FROM managers where phone=%s''',(decoded_token,))
         data1 = cursor.fetchall()

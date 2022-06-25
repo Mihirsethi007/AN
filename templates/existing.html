@@ -110,9 +110,10 @@
                                     <div class="input-group input-group-merge">
                                         <span class="input-group-text"><i class="bx bx-phone"></i></span>
                                         <input readonly type="number" id="login-phone" name="login-phone" class="form-control phone-mask"
-                                            placeholder="658 799 8941" aria-label="658 799 8941"
-                                            aria-describedby="login-phone" value="+{{ data[0][0] }}" />
+                                             aria-label="658 799 8941"
+                                            aria-describedby="login-phone" value="{{ data[0][0] }}" />
                                     </div>
+                                    
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="phone">Alternate Phone No</label>
@@ -426,7 +427,7 @@
                                 </div>
                                 <button id="submitbtn" type="submit" class="btn btn-primary">Submit</button>
                                 <div id="editbtndiv">
-                                    <button id="editbtn" onclick="editclick()"  class="btn btn-primary">Edit</button>
+                                    <button id="editbtn" onclick="editclick()"  class="btn btn-primary" type="button">Edit</button>
                                 </div>
                                 <!-- <div id="homebtndiv">
                                     
