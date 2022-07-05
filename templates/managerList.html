@@ -116,18 +116,20 @@
   </form>
   <script>
     function deleteRow(btn) {
+      event.preventDefault();
   var row = btn.parentNode.parentNode;
-  var data = row.textContent.trim()
-  data = data.split("\n")[1].trim()
+  var pdata = row.textContent.trim()
+  pdata = pdata.split("\n")[1].trim()
   // row.parentNode.removeChild(row);
   // let result = stringify(row).match(/ph/g);
   var server_data = {
-    'phno':data
+    'phno':pdata
   }
- 
+  console.log("server_data0",server_data);
   let text = "This account will be deleted permanently?";
   if (confirm(text) == true) {
         $.ajax({
+          
             method: "POST",
             url: "/deletemanager",
             data: JSON.stringify(server_data),
@@ -149,7 +151,7 @@
               window.location.reload()
             },
             error: function (data) {
-              console.log("error")
+              console.log("error");
               window.location.reload()
               // alert(data.message);
             }

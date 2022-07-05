@@ -58,7 +58,8 @@ TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
 TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
 
 twilio_api = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-
+# print(TWILIO_ACCOUNT_SID)
+# print(TWILIO_AUTH_TOKEN)
 
 def fetch_sms():
     return twilio_api.messages.stream()
@@ -74,14 +75,25 @@ def sms():
                               body='Welcome to ANM Staffing! Your profile account is under review. We will get in touch asap.',
                               from_='+18504092872',
                               to='+'+ph_no)
-    print(message.sid)
+    print("message sid console--->",message.sid)
     # fetch_sms()
     return redirect(url_for('admin_render'))
 
 @app.route("/")
 def welcome():
-    return render_template('main_scr.html')
-
+    return render_template('main_scr2.html')
+@app.route("/about")
+def about_us():
+    return render_template('about2.html')
+@app.route("/employees")
+def employees():
+    return render_template('employees2.html')
+@app.route("/employers")
+def employers():
+    return render_template('employers2.html')
+@app.route("/contact")
+def contact_us():
+    return render_template('contact2.html')
 
 @app.route('/admin', methods = ['POST', 'GET'])
 def admin_render():
@@ -93,9 +105,7 @@ def admin_render():
             # print(data)
             mysql.connection.commit()
             cursor.close()
-        
-            return render_template("admin_portal.html", value=data)
-            
+            return render_template("admin_portal2.html", value=data)
         return redirect(url_for('auth_render'))
 
 @app.route('/managerList', methods = ['POST', 'GET'])
@@ -106,16 +116,19 @@ def managerList_render():
             cursor.execute("select * from managers") 
 
             data = cursor.fetchall() #data from database 
-            print(data)
+            print("manager dta",data)
             mysql.connection.commit()
             cursor.close()
-            return render_template("managerList.html", value=data)
+            
+            return render_template("managerList2.html", value=data)
         return redirect(url_for('auth_render'))
 
 @app.route('/deletemanager', methods=['POST'])
 def delete_manager():
+    print("delete manager")
     if 'verno' in session and session['verno'] == '19876543210':
         try:
+            print("delete manager")
             if request.method == 'POST':
                 qtc_data = request.get_json()
                 ph_no = qtc_data["phno"]
@@ -142,7 +155,7 @@ def manager_render():
             print(data)
             mysql.connection.commit()
             cursor.close()
-            return render_template("manager_portal.html", value=data)
+            return render_template("manager_portal2.html", value=data)
         # return redirect(url_for('auth_render')) 
 
 @app.route('/auth', methods = ['POST', 'GET'])
@@ -157,6 +170,7 @@ def firebaseFunction():
         decoded_token = decoded_token['phone_number'][1:]
         session.permanent = True
         session['verno'] = decoded_token
+        
         if(decoded_token=='19876543210'):
             return json.dumps({"url": 'admin'})
 
@@ -189,6 +203,7 @@ def firebaseFunction():
 def upload_manager_data():
     if "verno" in session and session['verno'] == "19876543210":
         try:
+            print("in manager save data")
             name = request.form['manager_name']
             ph_no = request.form["manager_phone"]
             role = request.form["manager_role"]
@@ -210,7 +225,9 @@ def upload_manager_data():
 @app.route('/savedata', methods=['POST'])
 def upload_files():
     if "verno" in session:
+        print("before try")
         try:
+            print("in try")
             full_name = request.form['fullname']
             address = request.form["address"]
             ph_no = request.form["phone"]
@@ -241,10 +258,30 @@ def upload_files():
             typeGeneralhistory6 = request.form["typeGeneralhistory6"]
             typeOffice = request.form["typeOffice"]
             typeOfficehistory7 = request.form["typeOfficehistory7"]
-            pref_location = request.form["Preferredlocation"]
+            pref_location = request.form["pref_lo"]
+
+            typeGeneral_prev = request.form["employer_name2"]
+            
+            typeDriving_prev = request.form["employer_name3"]
+            
+            typeForklift_prev = request.form["employer_name4"]
+            
+            typeWalkie_prev = request.form["employer_name5"]
+            
+            typeWelder_prev = request.form["employer_name6"]
+            
+            typeCNC_prev = request.form["employer_name7"]
+            
+            typeWarehouse_prev = request.form["employer_name8"]
+            
+            typeOffice_prev = request.form["employer_name9"]
+            
+            
+
             print(full_name,address,ph_no,email,dob,gender,lang,prev_em,year_of_job,job_add,jobNature,typeGeneral,typeGeneralhistory1)
             print(typeDriving,typeGeneralhistory1,typeForklift,typeGeneralhistory2,typeWalkie,typeGeneralhistory3,typeWelder,typeGeneralhistory4,typeCNC,typeGeneralhistory5,typeWarehouse,typeGeneralhistory6,typeOffice,typeOfficehistory7)
             print(pref_location)
+            print(typeGeneral_prev,typeDriving_prev,typeForklift_prev,typeWalkie_prev,typeWelder_prev,typeCNC_prev,typeWarehouse_prev,typeOffice_prev)
             
         except Exception as e:
             print(e)
@@ -272,7 +309,7 @@ def upload_files():
                     upload_id.save(os.path.join(app.config['UPLOAD_PATH'], ph_no_key+'id'+filename_id))
                 if upload_id:
                     cursor = mysql.connection.cursor()
-                    cursor.execute(''' INSERT INTO users(phn, name, address, dob, email, gender, language, prv_em, year_of_job, job_add, jobnature, ty_gn, ty_gn_hy1, ty_dr, ty_gn_hy2, ty_fl, ty_gn_hy3, ty_wal, ty_gn_hywal, ty_wel, ty_gn_hy4, ty_cnc, ty_gn_hy5, ty_wh, ty_gn_hy6, ty_of, ty_of_hy7, contact_no, pref_loc) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)''',(ph_no_key,full_name,address,dob,email,gender,lang,prev_em,year_of_job,job_add,jobNature,typeGeneral,typeGeneralhistory,typeDriving,typeGeneralhistory1,typeForklift,typeGeneralhistory2,typeWalkie,typeGeneralhistory3,typeWelder,typeGeneralhistory4,typeCNC,typeGeneralhistory5,typeWarehouse,typeGeneralhistory6,typeOffice,typeOfficehistory7,ph_no, pref_location))
+                    cursor.execute(''' INSERT INTO users(phn, name, address, dob, email, gender, language, prv_em, year_of_job, job_add, jobnature, ty_gn, ty_gn_hy1, ty_dr, ty_gn_hy2, ty_fl, ty_gn_hy3, ty_wal, ty_gn_hywal, ty_wel, ty_gn_hy4, ty_cnc, ty_gn_hy5, ty_wh, ty_gn_hy6, ty_of, ty_of_hy7, contact_no, pref_loc, ty_gn_prev, ty_dr_prev, ty_fl_prev, ty_wal_prev, ty_wel_prev, ty_cnc_prev, ty_wh_prev, ty_of_prev) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s,%s,%s,%s,%s,%s)''',(ph_no_key,full_name,address,dob,email,gender,lang,prev_em,year_of_job,job_add,jobNature,typeGeneral,typeGeneralhistory,typeDriving,typeGeneralhistory1,typeForklift,typeGeneralhistory2,typeWalkie,typeGeneralhistory3,typeWelder,typeGeneralhistory4,typeCNC,typeGeneralhistory5,typeWarehouse,typeGeneralhistory6,typeOffice,typeOfficehistory7,ph_no, pref_location, typeGeneral_prev,typeDriving_prev,typeForklift_prev,typeWalkie_prev,typeWelder_prev,typeCNC_prev,typeWarehouse_prev,typeOffice_prev))
                     
                     mysql.connection.commit()
                     cursor.close()
@@ -323,7 +360,22 @@ def edit_upload_files():
             typeGeneralhistory6 = request.form["typeGeneralhistory6"]
             typeOffice = request.form["typeOffice"]
             typeOfficehistory7 = request.form["typeOfficehistory7"]
-            pref_location = request.form["Preferredlocation"]
+            pref_location = request.form["pref_lo"]
+            typeGeneral_prev = request.form["employer_name2"]
+            
+            typeDriving_prev = request.form["employer_name3"]
+            
+            typeForklift_prev = request.form["employer_name4"]
+            
+            typeWalkie_prev = request.form["employer_name5"]
+            
+            typeWelder_prev = request.form["employer_name6"]
+            
+            typeCNC_prev = request.form["employer_name7"]
+            
+            typeWarehouse_prev = request.form["employer_name8"]
+            
+            typeOffice_prev = request.form["employer_name9"]
             # print(full_name,address,ph_no,email,dob,gender,lang,prev_em,year_of_job,job_add,jobNature,typeGeneral,typeGeneralhistory1)
             # print(typeDriving,typeGeneralhistory1,typeForklift,typeGeneralhistory2,typeWalkie,typeGeneralhistory3,typeWelder,typeGeneralhistory4,typeCNC,typeGeneralhistory5,typeWarehouse,typeGeneralhistory6,typeOffice,typeOfficehistory7)
         except Exception as e:
@@ -365,8 +417,9 @@ def edit_upload_files():
             else:
                 # return f'No resume is selected' 
                 pass
+
             cursor = mysql.connection.cursor()
-            cmd = "UPDATE users SET name='"+full_name+"', address='"+address+"', dob='"+dob+"', email='"+email+"', gender='"+ gender+"', language='"+ lang+"', prv_em='"+ prev_em+"', year_of_job='"+year_of_job+"',job_add='"+job_add+"', jobnature='"+jobNature+"', ty_gn='"+typeGeneral+"', ty_gn_hy1='"+typeGeneralhistory +"', ty_dr='"+typeDriving+"',ty_gn_hy2='"+ typeGeneralhistory1+"', ty_fl='"+ typeForklift+"', ty_gn_hy3='"+ typeGeneralhistory2+"',ty_wal='"+ typeWalkie+"', ty_gn_hywal='"+ typeGeneralhistory3+"',ty_wel='"+typeWelder+"',ty_gn_hy4='"+typeGeneralhistory4 +"', ty_cnc='"+ typeCNC+"', ty_gn_hy5='"+typeGeneralhistory5 +"', ty_wh='"+typeWarehouse +"', ty_gn_hy6='"+ typeGeneralhistory6+"',ty_of='"+typeOffice+"', ty_of_hy7='"+ typeOfficehistory7+"', contact_no='"+ph_no+"'" +", pref_loc='"+pref_location +"' WHERE phn=" +ph_no_key
+            cmd = "UPDATE users SET name='"+full_name+"', address='"+address+"', dob='"+dob+"', email='"+email+"', gender='"+ gender+"', language='"+ lang+"', prv_em='"+ prev_em+"', year_of_job='"+year_of_job+"',job_add='"+job_add+"', jobnature='"+jobNature+"', ty_gn='"+typeGeneral+"', ty_gn_hy1='"+typeGeneralhistory +"', ty_dr='"+typeDriving+"',ty_gn_hy2='"+ typeGeneralhistory1+"', ty_fl='"+ typeForklift+"', ty_gn_hy3='"+ typeGeneralhistory2+"',ty_wal='"+ typeWalkie+"', ty_gn_hywal='"+ typeGeneralhistory3+"',ty_wel='"+typeWelder+"',ty_gn_hy4='"+typeGeneralhistory4 +"', ty_cnc='"+ typeCNC+"', ty_gn_hy5='"+typeGeneralhistory5 +"', ty_wh='"+typeWarehouse +"', ty_gn_hy6='"+ typeGeneralhistory6+"',ty_of='"+typeOffice+"', ty_of_hy7='"+ typeOfficehistory7+"', contact_no='"+ph_no+"'" +", pref_loc='"+pref_location +"', ty_gn_prev='"+typeGeneral_prev+"', ty_dr_prev='"+typeDriving_prev+"', ty_fl_prev='"+typeForklift_prev+"', ty_wal_prev='"+typeWalkie_prev+"', ty_wel_prev='"+typeWelder_prev+"', ty_cnc_prev='"+typeCNC_prev+"', ty_wh_prev='"+typeWarehouse_prev+"', ty_of_prev='"+typeOffice_prev+"' WHERE phn=" +ph_no_key
             print(cmd)
             cursor.execute(cmd)
             mysql.connection.commit()
@@ -378,30 +431,18 @@ def edit_upload_files():
             return f'Error encountered while uploading documents'
     return redirect(url_for('auth_render'))
 
-@app.route("/index")
-def registeration():
-    return render_template('index.html')
-
 @app.route("/reg")
 def register():
     ph_no = request.args.get("ph")
     # return render_template('registration.html',ph_no=ph_no)
     if "verno" in session:
         if session['verno']==ph_no or session['verno']=="19876543210":
-            return render_template('registration.html',ph_no=ph_no)
+            return render_template('registration2.html',ph_no=ph_no)
         return redirect('/404')
     return redirect(url_for('auth_render'))
 
 @app.route("/exi")
 def existing():
-    # ph_no = request.args.get("ph")
-    # cursor = mysql.connection.cursor()
-    # cursor.execute(''' select * from users where phn= %s ''',(ph_no,))
-    # data = cursor.fetchall()
-    # print(data)   
-    # mysql.connection.commit()
-    # cursor.close()
-    # return render_template('existing.html',data=data,ph_on=ph_no)
     ph_no = request.args.get("ph")
     if "verno" in session:
         if session['verno'] == ph_no or session['verno'] == '19876543210':
@@ -569,3 +610,4 @@ def getmandata():
 
 if __name__=="__main__":
     app.run(debug=True)
+    # app.run(debug=True, host='localhost', port=5)

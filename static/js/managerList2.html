@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Manager List - ANM Staffing</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">    
+
+    <script src="https://kit.fontawesome.com/0de347ad55.js" crossorigin="anonymous"></script>    
+
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='owlcarousel/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='owlcarousel/owl.theme.default.min.css') }}">
+
+
+
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Header start -->
+
+    <nav id="mainNav" class="site_navbar navbar navbar-expand-lg bg-light fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="admin_portal.html">Admin</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="admin-portal.html"><i class="fa-solid fa-gauge"></i> Admin Portal</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="manager-list.html"><i class="fa-solid fa-list-check"></i> Manager List</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#addmanagerModal"><i class="fa-solid fa-user-plus"></i> Add Managers</a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn btn-primary mt-1" href="logout.html"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                </li>
+              </ul>
+  
+
+          </div>
+        </div>
+      </nav>    
+
+    <!-- Header end -->      
+
+    <!-- Banner Section start -->
+
+      <section class="site_subheader_section">
+          <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center text-white">
+                        <h1 class="site_subheader_section_title">Manager List</h1>
+                    </div>
+
+                </div>
+          </div>
+      </section>
+
+    <!-- Banner Section end -->
+
+    <!-- Admin Portal start -->
+
+    <section class="site_section_wrapper">
+
+        <div class="container">
+  
+          <div class="row align-items-center">
+            <div class="col-lg-12">
+
+              <div class="border bg-light rounded-3 p-5">
+                <!-- Form-->
+
+                <form  method="POST" enctype="multipart/form-data">
+
+
+                     
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table id="recieved_data" class="site_ap_table table table-striped border text-center">
+                                      {% block content %}
+                                      <thead>
+                                        <tr>
+                                          <th style="text-align: center; vertical-align: middle;padding: 20px 0px;">Name</th>
+                                          <!-- <th>Address</th> -->
+                                          <th style="text-align: center; vertical-align: middle;padding: 20px 0px;">Phone no</th>
+                                          <th style="text-align: center; vertical-align: middle;padding: 20px 0px;">Role </th>
+                                          <th style="text-align: center; vertical-align: middle;padding: 20px 0px;">action </th>
+                                          
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {% if value %}
+                                        {% for row in value %}
+                                        <tr>
+                                  
+                                          <td>{{row[0]}}</td>
+                                          <td id="ph" name="ph" type="text">{{row[1]}}</td>
+                                          <td>{{row[2]}}</td>
+                                          <td><button type="submit" class="btn btn-danger" onclick="deleteRow(this)" ><i class="fa fa-trash"></i> </button></td>
+                                        </tr>
+                                        {% endfor %}
+                                        {% else %}
+                                        <tr style="background-color: rgba(242, 242, 242, 0.985);text-align: center;">
+                                          <td colspan="6" style="text-align: center; vertical-align: middle;padding: 20px 0px;">No record Found.</td>
+                                        </tr>
+                                        {% endif %}
+                                      </tbody>
+                                  
+                                      {% endblock content %}
+                                    </table>  
+                                </div>                              
+                            </div>
+
+
+                        </div>
+
+    
+
+                </form>
+                
+
+                <!-- Form End-->              
+              </div>                
+
+            </div>
+  
+          </div>
+  
+        </div>
+  
+      </section>
+  
+   
+
+
+
+<!-- Add Manager Modal -->
+<div class="modal fade" id="addmanagerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="">Add Manager</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-control" id="">
+            </div>
+   
+            <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="">
+            </div>
+    
+            <div class="mb-3">
+                <label class="form-label">Role</label>
+                <select class="form-control">
+                    <option>Manager</option>
+                </select>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <a href="manager-list.html" class="btn btn-primary">Apply</a>            
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+<!-- Footer Start -->
+
+<footer class="site_footer">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-4 mb-4">
+              <h5 class="site_footer_title">ANM Staffing </h5>
+              <p>ANM Staffing offers excellent service and care as per the market standard, with tailored recruitment packages to suit every unique requirement.</p>
+              <ul class="site_footer_social">
+                <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
+            </ul>
+
+          </div>
+          <div class="col-lg-4 site_ql_col mb-4">
+              <h5 class="site_footer_title">Quick Links </h5>
+              <ul class="site_footer_links">
+                <li><a href="about.html">About</a></li>
+                <li><a href="employees.html">Employees</a></li>
+                <li><a href="employers.html">Employers</a></li>
+                <li><a href="contact.html">Contact</a></li>
+
+            </ul>
+
+          </div>                
+          <div class="col-lg-4">
+            <h5 class="site_footer_title">Contact Details </h5>
+            <ul class="site_contact_list list-unstyled">
+              <li><i class="fas fa-map-marker-alt"></i>7007 Islington Avenue, Unit 2, Woodbridge, L4L 4T5</li>
+              <li><i class="fas fa-phone"></i><a href="tel:+19055539505">+1  905 553 9505</a></li>
+              <li><i class="far fa-envelope"></i><a href="mailto:info@anmstaffing.ca">info@anmstaffing.ca</a></li>
+            </ul>            
+            
+        </div>
+
+      </div>
+
+          <hr class="site_hr">
+
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <p class="mb-0">Copyright © 2022 ANM Staffing</p>
+        </div>
+
+    </div>
+  </div>
+</footer>
+
+<!-- Footer end -->
+
+
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="owlcarousel/owl.carousel.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/script.js"></script>
+<script>
+  function deleteRow(btn) {
+    event.preventDefault();
+var row = btn.parentNode.parentNode;
+var pdata = row.textContent.trim()
+pdata = pdata.split("\n")[1].trim()
+// row.parentNode.removeChild(row);
+// let result = stringify(row).match(/ph/g);
+var server_data = {
+  'phno':pdata
+}
+console.log("server_data0",server_data);
+let text = "This account will be deleted permanently?";
+if (confirm(text) == true) {
+      $.ajax({
+        
+          method: "POST",
+          url: "/deletemanager",
+          data: JSON.stringify(server_data),
+          contentType: "application/json",
+          dataType: 'json',
+          success: function (data) {
+            if (data.status == 404) {
+              $("#lblText").html('Unable to process request');
+              $('#dialog').css('background-color', 'red')
+            }
+            else if (data.status == 200){
+              // var w = window.open('','','width=100%,height=100')
+              // w.document.write('Account Successfully deleted')
+              // w.focus()
+              // setTimeout(function() {w.close();}, 2000)
+              $("#lblText").html('Record deleted successfully.');
+            } $('#dialog').fadeIn('slow').delay(10000).fadeOut('slow');
+            // console.log('got it',data)
+            window.location.reload()
+          },
+          error: function (data) {
+            console.log("error");
+            window.location.reload()
+            // alert(data.message);
+          }
+        })
+    }
+    else{
+      window.location.reload()
+    } 
+    
+  }
+
+  
+</script>
+</body>
+
+</html>

@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Detail - ANM Staffing</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">    
+
+    <script src="https://kit.fontawesome.com/0de347ad55.js" crossorigin="anonymous"></script>    
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="owlcarousel/owl.theme.default.min.css">  
+
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header start -->
+
+    <nav id="mainNav" class="site_navbar navbar navbar-expand-lg bg-light fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="index.html">ANM Staffing</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="about.html">About</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="employees.html">Employees</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="employers.html">Employers</a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn btn-primary mt-1" href="contact.html">Contact</a>
+                </li>
+              </ul>
+  
+
+          </div>
+        </div>
+      </nav>    
+
+    <!-- Header end -->      
+
+    <!-- Banner Section start -->
+
+      <section class="site_subheader_section">
+          <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center text-white">
+                        <h1 class="site_subheader_section_title">User Detail</h1>
+                    </div>
+
+                </div>
+          </div>
+      </section>
+
+    <!-- Banner Section end -->
+
+    <!-- Form start -->
+
+    <section class="site_section_wrapper">
+
+        <div class="container">
+  
+          <div class="row align-items-center">
+            <div class="col-lg-10 mx-auto">
+
+              <div class="border bg-light rounded-3 p-5">
+                <!-- Form-->
+
+                <form id="" action="#" method="POST">
+
+                    <!-- Step 1 -->
+
+                        <div class="d-flex justify-content-between align-items-center mb-5">
+                            <h4 class="site_step_title mb-0">Personal Information</h4>
+                            <a href="user-edit.html" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" name="fullname"  id="fullname" value="Vishu" disabled>
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" name="youremail" id="youremail" value="vishu01@gmail.com" disabled>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 mb-4">
+                                <label class="form-label">Address</label>
+                                <input type="text" class="form-control" name="personaladdress" value="Brampton, Toronto, Canada" id="personaladdress" disabled>
+                            </div>
+                        </div>
+
+                        
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Phone No</label>
+                                <input type="tel" class="form-control" name="phoneno" id="phoneno" value="05679865658" disabled>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">DOB</label>
+                                <input type="date" class="form-control" name="dob" id="dob" value="1988/01/01" disabled>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Gender</label>
+                                <select class="form-control" name="gender" id="gender" disabled>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Preferred Language</label>
+                                <select class="form-control" name="plang" id="plang" disabled>
+                                    <option value="english">English</option>
+                                    <option value="filipino">Filipino</option>
+                                </select>
+                            </div>
+                        </div>
+    
+
+    
+                    <!-- Step 2 -->        
+
+                        <h4 class="site_step_title mb-5">Work Profile</h4>
+
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Name of previous employer</label>
+                                <input type="text" class="form-control" name="pemployer" value="butr"  id="pemployer" disabled>
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Years of work</label>
+                                <input type="text" class="form-control" name="yow" id="yow" value="5" disabled>
+                            </div>
+                        </div>
+    
+                        <div class="row mb-4">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Address</label>
+                                <input type="text" class="form-control" name="workaddress" id="workaddress" value="Brampton, Canada" disabled>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Type of work</label>
+                                <input type="text" class="form-control" name="tow" id="tow" value="Programmer" disabled>
+                            </div>
+                        </div>
+
+
+    
+
+
+
+                    <!-- Step 3 -->        
+
+                        <h4 class="site_step_title mb-5">Job Candidate looking for</h4>
+
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">General Labour</label>
+                                <select class="form-control valid" name="genlabour" id="genlabour" disabled>
+                                    <option value="packaging">Packaging</option>
+                                </select>                                
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Experience</label>
+                                <input type="text" class="form-control" name="glexp" id="glexp" value="2" disabled>
+                            </div>
+                        </div>
+    
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Driving</label> 
+                                <select class="form-control valid" name="driving" id="driving" value="2" disabled>
+                                    <option value="driver">G Driver</option>
+                                </select>                                
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Experience</label>
+                                <input type="text" class="form-control" name="drivingexp" id="drivingexp" value="4" disabled>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Forklift</label>
+                                <select class="form-control valid" name="forklift" id="forklift" disabled>
+                                    <option value="other">Other</option>
+                                </select>                                
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Experience</label>
+                                <input type="text" class="form-control" name="forkliftgexp" id="forkliftgexp" value="1" disabled>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Subtitle</label>
+                                <select class="form-control valid" name="forklift" id="forklift" disabled>
+                                    <option value="other">Other</option>
+                                </select>                                
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Experience</label>
+                                <input type="text" class="form-control" name="subtitlegexp" id="subtitlegexp" value="1" disabled>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Welder</label>
+                                <select class="form-control valid" name="welder" id="welder" disabled>
+                                    <option value="tigwelder">Tig Welder</option>
+                                </select>                                
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Experience</label>
+                                <input type="text" class="form-control" name="welderexp" id="welderexp" value="1" disabled>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">CNC Operator</label>
+                                <select class="form-control valid" name="cncopt" id="cncopt" disabled>
+                                    <option value="tigwelder">Lathe Machine Operator</option>
+                                </select>                                
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Experience</label>
+                                <input type="text" class="form-control" name="cncoptexp" id="cncoptexp" value="1" disabled>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Warehouse</label>
+                                <select class="form-control valid" name="warehouse" id="warehouse" disabled>
+                                    <option value="warehouse">Wareshoue Supervisor</option>
+                                </select>                                
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Experience</label>
+                                <input type="text" class="form-control" name="warehouseexp" id="warehouseexp" value="1" disabled>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Office</label>
+                                <select class="form-control valid" name="office" id="office" disabled>
+                                    <option value="warehouse">Office Admin</option>
+                                </select>                                
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Experience</label>
+                                <input type="text" class="form-control" name="officeexp" id="officeexp" value="1" disabled>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Preferred Location</label>
+                                <select class="form-control valid" name="plocation" id="plocation" disabled>
+                                    <option value="location1">Location 1</option>
+                                </select>                                
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Identification Card</label>
+                                <div class="input-group">
+                                    <input type="file" class="form-control" id="icard" disabled>
+                                </div>                                
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Resume/Curriculum Vitae</label>
+                                <div class="input-group">
+                                    <input type="file" class="form-control" id="rvitae" disabled>
+                                </div>                                
+                            </div>
+                        </div>
+
+
+
+                </form>
+                
+
+                <!-- Form End-->              
+              </div>                
+
+            </div>
+  
+          </div>
+  
+        </div>
+  
+      </section>
+  
+    <!-- About end -->      
+
+
+
+
+  
+
+
+<!-- Footer Start -->
+
+<footer class="site_footer">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-4 mb-4">
+              <h5 class="site_footer_title">ANM Staffing </h5>
+              <p>ANM Staffing offers excellent service and care as per the market standard, with tailored recruitment packages to suit every unique requirement.</p>
+              <ul class="site_footer_social">
+                <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
+            </ul>
+
+          </div>
+          <div class="col-lg-4 site_ql_col mb-4">
+              <h5 class="site_footer_title">Quick Links </h5>
+              <ul class="site_footer_links">
+                <li><a href="about.html">About</a></li>
+                <li><a href="employees.html">Employees</a></li>
+                <li><a href="employers.html">Employers</a></li>
+                <li><a href="contact.html">Contact</a></li>
+
+            </ul>
+
+          </div>                
+          <div class="col-lg-4">
+            <h5 class="site_footer_title">Contact Details </h5>
+            <ul class="site_contact_list list-unstyled">
+              <li><i class="fas fa-map-marker-alt"></i>7007 Islington Avenue, Unit 2, Woodbridge, L4L 4T5</li>
+              <li><i class="fas fa-phone"></i><a href="tel:+19055539505">+1  905 553 9505</a></li>
+              <li><i class="far fa-envelope"></i><a href="mailto:info@anmstaffing.ca">info@anmstaffing.ca</a></li>
+            </ul>            
+            
+        </div>
+
+      </div>
+
+          <hr class="site_hr">
+
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <p class="mb-0">Copyright © 2022 ANM Staffing</p>
+        </div>
+
+    </div>
+  </div>
+</footer>
+
+<!-- Footer end -->
+
+
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="owlcarousel/owl.carousel.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/script.js"></script>
+    
+</body>
+
+</html>

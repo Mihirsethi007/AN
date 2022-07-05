@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Profile - ANM Staffing</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/0de347ad55.js" crossorigin="anonymous"></script>
+
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='owlcarousel/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='owlcarousel/owl.theme.default.min.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .multiselect {
+            width: 100%;
+        }
+
+        .selectBox {
+            position: relative;
+        }
+
+        .selectBox select {
+            width: 100%;
+        }
+
+        .overSelect {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        #mySelectOptions {
+            display: none;
+            border: 0.5px #7c7c7c solid;
+            background-color: #ffffff;
+            max-height: 150px;
+            overflow-y: scroll;
+        }
+
+        #mySelectOptions label {
+            display: block;
+            font-weight: normal;
+            display: block;
+            white-space: nowrap;
+            min-height: 1.2em;
+            background-color: #ffffff00;
+            padding: 0 2.25rem 0 .75rem;
+            /* padding: .375rem 2.25rem .375rem .75rem; */
+        }
+
+        #mySelectOptions label:hover {
+            background-color: #1e90ff;
+        }
+
+        /* body, .page-wrapper,
+    .wrapper,        
+    .card-heading{
+        background-image: url({{url_for( 'static', filename='img/bg.png')}});
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    /* .card-body{
+        width: 100px;
+    } */
+    </style>
+    <!-- Script for google location address autocomplete api -->
+    <script async defer
+        src="//maps.googleapis.com/maps/api/js?key=AIzaSyASACYmJYRTtC9LG76dt1-xld__TTkmRRc&libraries=places&callback=initialize"></script>
+
+</head>
+
+<body>
+
+    <!-- Header start -->
+
+    <nav id="mainNav" class="site_navbar navbar navbar-expand-lg bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">ANM Staffing</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/employees">Employees</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/employers">Employers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary mt-1" href="/contact">Contact</a>
+                    </li>
+                </ul>
+
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header end -->
+
+    <!-- Banner Section start -->
+
+    <section class="site_subheader_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center text-white">
+                    <h1 class="site_subheader_section_title">User Registeration</h1>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner Section end -->
+
+    <!-- About start -->
+
+    <section class="site_section_wrapper">
+
+        <div class="container">
+
+            <div class="row align-items-center">
+                <div class="col-lg-10 mx-auto">
+
+                    <div class="border bg-light rounded-3 p-5">
+                        <!-- Form-->
+
+                        <form id="formsave" action="/savedata" method="POST"  enctype="multipart/form-data">
+                            <!-- One "tab" for each step in the form: -->
+
+
+                            <!-- Step 1 -->
+                            <div class="tab">
+
+                                <h4 class="site_step_title mb-5">STEP 1 - Personal Information</h4>
+
+                                <!-- <h4 class="site_step_title mb-4">Personal Information</h4> -->
+
+
+                                <div class="row">
+                                    <div class="col-lg-6 mb-4">
+                                        <label class="form-label">Full Name</label>
+                                        <input type="text" class="form-control" name="fullname" id="fullname"
+                                            placeholder="">
+                                    </div>
+
+                                    <div class="col-lg-6 mb-4">
+                                        <label class="form-label">Address</label>
+                                        <input type="text" class="form-control" name="address" id="address"
+                                            placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 mb-4">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="email" id="email" placeholder="">
+                                    </div>
+                                    <div class="mb-3" hidden>
+                                        <label class="form-label" for="login-phone">Login Phone No</label>
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="bx bx-phone"></i></span>
+                                            <input readonly type="number" id="login-phone" name="login-phone"
+                                                class="form-control phone-mask" value="{{ ph_no }}"
+                                                aria-label="658 799 8941" aria-describedby="login-phone"> </input>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-4">
+                                        <label class="form-label">Phone No</label>
+                                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">DOB</label>
+                                        <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth"
+                                            placeholder="">
+                                    </div>
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Gender</label>
+                                        <select class="form-control" name="gender" id="gender">
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Preferred Language</label>
+                                        <select class="form-control" name="language" id="language">
+                                            <option>English</option>
+                                            <option>French</option>
+                                            <option>Spanish</option>
+                                            <option>Vietnamese</option>
+                                            <option>Mandarin</option>
+                                            <option>Cantonese</option>
+                                            <option>Filipino</option>
+                                            <option>Telugu</option>
+                                            <option>Hindi</option>
+                                            <option>Punjabi</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="tab">
+
+                                <!-- <ul class="site_step_form_tabs nav nav-pills nav-fill mb-5">
+                            <li class="nav-item"><a href="#" class="">Step 1</a></li>
+                            <li class="nav-item site_sft_active"><a href="#" class="">Step 2</a></li>
+                            <li class="nav-item"><a href="#" class="">Step 3</a></li>
+                        </ul> -->
+
+
+                                <h4 class="site_step_title mb-4">Work Profile</h4>
+
+
+                                <div class="row">
+                                    <div class="col-lg-6 mb-4">
+                                        <label class="form-label">Name of previous employer</label>
+                                        <input type="text" class="form-control" name="employer_name" id="employer_name"
+                                            placeholder="">
+                                    </div>
+
+                                    <div class="col-lg-6 mb-4">
+                                        <label class="form-label">Years of work</label>
+                                        <input type="text" class="form-control" name="employeedYears"
+                                            id="employeedYears" placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 mb-4">
+                                        <label class="form-label">Address</label>
+                                        <input type="text" class="form-control" name="employer_address"
+                                            id="employer_address" placeholder="">
+                                    </div>
+                                    <div class="col-lg-6 mb-4">
+                                        <label class="form-label">Type of work</label>
+                                        <input type="text" class="form-control" name="work_nature" id="work_nature"
+                                            placeholder="">
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+
+
+                            <!-- Step 3 -->
+                            <div class="tab">
+                                <!-- <ul class="site_step_form_tabs nav nav-pills nav-fill mb-5">
+                            <li class="nav-item"><a href="#" class="">Step 1</a></li>
+                            <li class="nav-item"><a href="#" class="">Step 2</a></li>
+                            <li class="nav-item site_sft_active"><a href="#" class="">Step 3</a></li>
+                        </ul> -->
+                                <h4 class="site_step_title mb-4"> Job Candidate is looking for</h4>
+
+
+                                <!-- Check box row start-->
+                                <div class="row">
+                                    <div class="col-lg-12 mb-2">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" value="generallabour"
+                                                id="chkgenlabour">
+                                            <label class="form-label form-check-label" for="chkgenlabour">
+                                                General Labour
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Check box row end-->
+
+                                <div class="row site_gl_row">
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">General Labour</label>
+                                        <select class="form-control valid" name="typeGeneral" id="defaultSelect"
+                                            aria-invalid="false">
+                                            <option>Packaging</option>
+                                            <option>Heavy Lifting</option>
+                                            <option>Sorting</option>
+                                            <option>Sanitation</option>
+                                            <option>Warehouse</option>
+                                            <option>Assembly</option>
+                                            <option>Production Line</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Experience</label>
+                                        <input type="text" min=0 class="form-control" name="typeGeneralhistory"
+                                            id="basic-icon-default-phone" placeholder="">
+                                    </div>
+
+                                    <div class="col-lg-4 mb-4 align-self-center">
+                                        <label class="form-label mb-0">Previous employer</label>
+                                        <input type="text" class="form-control" name="employer_name2"
+                                            id="employer_name2">
+
+                                    </div>
+                                </div>
+
+                                <!-- =================================== -->
+
+                                <!-- Check box row start-->
+                                <div class="row">
+                                    <div class="col-lg-12 mb-2">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" value="driving"
+                                                id="chkdriving">
+                                            <label class="form-label form-check-label" for="chkdriving">
+                                                Driving
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Check box row end-->
+
+
+                                <div class="row site_driving_row">
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Driving</label>
+                                        <select class="form-control valid" name="typeDriving" id="defaultSelect"
+                                            aria-invalid="false">
+                                            <option>G Driver</option>
+                                            <option>G Driver with own car</option>
+                                            <option>Sorting</option>
+                                            <option>GZ Driver</option>
+                                            <option>DZ Driver</option>
+                                            <option>AZ Driver</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Experience</label>
+                                        <input type="text" min=0 class="form-control" name="typeGeneralhistory1"
+                                            id="basic-icon-default-phone" placeholder="">
+                                    </div>
+                                    <div class="col-lg-4 mb-4 align-self-center">
+                                        <label class="form-label mb-0">Previous employer</label>
+                                        <input type="text" class="form-control" name="employer_name3"
+                                            id="employer_name3">
+
+                                    </div>
+
+                                </div>
+
+                                <!-- =================================== -->
+
+                                <!-- Check box row start-->
+                                <div class="row">
+                                    <div class="col-lg-12 mb-2">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" value="forklift"
+                                                id="chkforklift">
+                                            <label class="form-label form-check-label" for="chkforklift">
+                                                Forklift
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Check box row end-->
+
+                                <div class="row site_forklift_row">
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Forklift</label>
+                                        <select class="form-control valid" name="typeForklift" id="defaultSelect"
+                                            aria-invalid="false">
+                                            <option>Forklift</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Experience</label>
+                                        <input type="text" min=0 class="form-control" name="typeGeneralhistor2"
+                                            id="basic-icon-default-phone" placeholder="">
+                                    </div>
+                                    <div class="col-lg-4 mb-4 align-self-center">
+                                        <label class="form-label mb-0">Previous employer</label>
+                                        <input type="text" class="form-control" name="employer_name4"
+                                            id="employer_name4">
+                                    </div>
+
+                                </div>
+
+                                <!-- =================================== -->
+
+                                <!-- Check box row start-->
+                                <div class="row">
+                                    <div class="col-lg-12 mb-2">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" value="subtitle"
+                                                id="chksubtitle">
+                                            <label class="form-label form-check-label" for="chksubtitle">
+                                                Subtitle
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Check box row end-->
+
+                                <div class="row site_subtitle_row">
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Subtitle</label>
+                                        <select class="form-control valid" name="typeWalkie" id="defaultSelect"
+                                            aria-invalid="false">
+                                            <option>Walkie Operator</option>
+                                            <option>Raymond Reach Operator</option>
+                                            <option>Counter Balance Propane</option>
+                                            <option>Counter Balance Electric</option>
+                                            <option>Order Picker</option>
+                                            <option>Pallet Picker</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Experience</label>
+                                        <input type="text" min=0 class="form-control" name="typeGeneralhistory3"
+                                            id="basic-icon-default-phone" placeholder="">
+                                    </div>
+                                    <div class="col-lg-4 mb-4 align-self-center">
+                                        <label class="form-label mb-0">Previous employer</label>
+                                        <input type="text" class="form-control" name="employer_name5"
+                                            id="employer_name5">
+
+                                    </div>
+
+                                </div>
+
+                                <!-- =================================== -->
+
+                                <!-- Check box row start-->
+                                <div class="row">
+                                    <div class="col-lg-12 mb-2">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" value="subtitle"
+                                                id="chkWelder">
+                                            <label class="form-label form-check-label" for="chkWelder">
+                                                Welder
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Check box row end-->
+
+                                <div class="row site_welder_row">
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Welder</label>
+                                        <select class="form-control valid" name="typeWelder" id="defaultSelect"
+                                            aria-invalid="false">
+                                            <option>Tig Welder</option>
+                                            <option>Mig Welder</option>
+                                            <option>Ro Welder</option>
+                                            <option>Gas Welder</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Experience</label>
+                                        <input type="text" min=0 class="form-control" name="typeGeneralhistory4"
+                                            id="basic-icon-default-phone" placeholder="">
+                                    </div>
+                                    <div class="col-lg-4 mb-4 align-self-center">
+                                        <label class="form-label mb-0">Previous employer</label>
+                                        <input type="text" class="form-control" name="employer_name6"
+                                            id="employer_name6">
+
+                                    </div>
+
+                                </div>
+
+                                <!-- =================================== -->
+
+
+                                <!-- Check box row start-->
+                                <div class="row">
+                                    <div class="col-lg-12 mb-2">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" value="subtitle"
+                                                id="chkcnc">
+                                            <label class="form-label form-check-label" for="chkcnc">
+                                                CNC Operator
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Check box row end-->
+
+                                <div class="row site_cnc_row">
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">CNC Operator</label>
+                                        <select class="form-control valid" name="typeCNC" id="defaultSelect"
+                                            aria-invalid="false">
+                                            <option>Lathe Machine Operator</option>
+                                            <option>Milling Machine Operator</option>
+                                            <option>Laser Machine Operator</option>
+                                            <option>Plasma Cutting Machine</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Experience</label>
+                                        <input type="text" min=0 class="form-control" name="typeGeneralhistory5"
+                                            id="basic-icon-default-phone" placeholder="">
+                                    </div>
+                                    <div class="col-lg-4 mb-4 align-self-center">
+                                        <label class="form-label mb-0">Previous employer</label>
+                                        <input type="text" class="form-control" name="employer_name7"
+                                            id="employer_name7">
+
+                                    </div>
+
+                                </div>
+
+                                <!-- =================================== -->
+
+                                <!-- Check box row start-->
+                                <div class="row">
+                                    <div class="col-lg-12 mb-2">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" value="subtitle"
+                                                id="chkwarehouse">
+                                            <label class="form-label form-check-label" for="chkwarehouse">
+                                                Warehouse
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Check box row end-->
+
+                                <div class="row site_warehouse_row">
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Warehouse</label>
+                                        <select class="form-control valid" name="typeWarehouse" id="defaultSelect"
+                                            aria-invalid="false">
+                                            <option>Warehouse Supervisor</option>
+                                            <option>Shipping/Receiving</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Experience</label>
+                                        <input type="text" min=0 class="form-control" name="typeGeneralhistory6"
+                                            id="basic-icon-default-phone" placeholder="">
+                                    </div>
+                                    <div class="col-lg-4 mb-4 align-self-center">
+                                        <label class="form-label mb-0">Previous employer</label>
+                                        <input type="text" class="form-control" name="employer_name8"
+                                            id="employer_name8">
+
+                                    </div>
+
+                                </div>
+
+                                <!-- =================================== -->
+
+
+                                <!-- Check box row start-->
+                                <div class="row">
+                                    <div class="col-lg-12 mb-2">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="checkbox" value="subtitle"
+                                                id="chkoffice">
+                                            <label class="form-label form-check-label" for="chkoffice">
+                                                Office
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Check box row end-->
+
+                                <div class="row site_office_row">
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Office</label>
+                                        <select class="form-control valid" name="typeOffice" id="defaultSelect"
+                                            aria-invalid="false">
+                                            <option>Office Admin</option>
+                                            <option>Receptionist</option>
+                                            <option>Call Center Executive</option>
+                                            <option>Book Keeper</option>
+                                            <option>Payroll Assistant</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-4 mb-4">
+                                        <label class="form-label">Experience</label>
+                                        <input type="text" min=0 class="form-control" name="typeOfficehistory7"
+                                            id="basic-icon-default-phone" placeholder="">
+                                    </div>
+                                    <div class="col-lg-4 mb-4 align-self-center">
+                                        <label class="form-label mb-0">Previous employer</label>
+                                        <input type="text" class="form-control" name="employer_name9"
+                                            id="employer_name9">
+
+                                    </div>
+
+                                </div>
+                                <!-- =================================== -->
+
+
+                                <!-- <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <label class="form-label">Preferred Location</label>
+                                <select class="form-control valid" name="Preferredlocation" id="Preferredlocation" aria-invalid="false">
+                                    <option value="location1">Location 1</option>
+                                </select>                                
+                            </div>
+
+                        </div> -->
+
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <label for="Preferredlocation" class="form-label">Preferred Location</label>
+
+                                        <div id="Preferredlocation" name="Preferredlocation" class="multiselect">
+                                            <div id="mySelectLabel" class="selectBox" onclick="toggleCheckboxArea()">
+                                                <select class="form-select">
+                                                    <option>Select the Location</option>
+                                                </select>
+                                                <div class="overSelect"></div>
+                                            </div>
+                                            <div id="mySelectOptions">
+                                                <label for="one"><input type="checkbox" id="one"
+                                                        onchange="checkboxStatusChange()" value="Location1" />
+                                                    Location1</label>
+                                                <label for="two"><input type="checkbox" id="two"
+                                                        onchange="checkboxStatusChange()" value="Location2" />
+                                                    Location2</label>
+                                                <label for="three"><input type="checkbox" id="three"
+                                                        onchange="checkboxStatusChange()" value="Location3" />
+                                                    Location3</label>
+                                                <label for="four"><input type="checkbox" id="four"
+                                                        onchange="checkboxStatusChange()" value="Location4" />
+                                                    Location4</label>
+                                                <label for="five"><input type="checkbox" id="five"
+                                                        onchange="checkboxStatusChange()" value="Location5" />
+                                                    Location5</label>
+                                                <label for="six"><input type="checkbox" id="six"
+                                                        onchange="checkboxStatusChange()" value="Location6" />
+                                                    Location6</label>
+                                                <label for="seven"><input type="checkbox" id="seven"
+                                                        onchange="checkboxStatusChange()" value="Location7" />
+                                                    Location7</label>
+                                                <label for="eight"><input type="checkbox" id="eight"
+                                                        onchange="checkboxStatusChange()" value="Location8" />
+                                                    Location8</label>
+                                                <label for="nine"><input type="checkbox" id="nine"
+                                                        onchange="checkboxStatusChange()" value="Location9" />
+                                                    Location9</label>
+                                                <label for="ten"><input type="checkbox" id="ten"
+                                                        onchange="checkboxStatusChange()" value="Location10" />
+                                                    Location10</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 mb-4">
+                                        <label class="form-label">Identification Card</label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" name="id_doc" id="inputGroupFile04"
+                                                aria-describedby="inputGroupFileAddon04" aria-label="Upload"
+                                                accept=".pdf" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 mb-4">
+                                        <label class="form-label">Resume/Curriculum Vitae</label>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" name="cv_doc" id="inputGroupFile04"
+                                                aria-describedby="inputGroupFileAddon04" aria-label="Upload"
+                                                accept=".pdf" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="number" id="ph_no" name="ph_no" class="form-control phone-mask"
+                                    placeholder="658 799 8941" aria-label="658 799 8941" aria-describedby="ph_no" hidden
+                                    value="{{ ph_no }}" />
+
+                                <input type="text" id="pref_lo" name="pref_lo" class="form-control phone-mask" hidden />
+
+                            </div>
+
+
+
+
+
+
+
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between mt-5">
+                                    <button type="button" class="previous btn btn-secondary">Previous</button>
+                                    <button type="button" class="next btn btn-primary float-end">Next</button>
+                                    <!--button type="button" class="next btn btn-primary submit float-end">Submit</button-->
+                                    <button  type="submit" class="btn btn-primary submit float-end">Submit</button>
+                                </div>
+                            </div>
+
+                            <!-- <div class="site_required_alert"></div> -->
+
+
+                        </form>
+
+
+                        <!-- multistep form -->
+                        <!-- Form End-->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- About end -->
+
+
+
+
+
+
+
+    <!-- Footer Start -->
+
+    <footer class="site_footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="site_footer_title">ANM Staffing </h5>
+                    <p>ANM Staffing offers excellent service and care as per the market standard, with tailored
+                        recruitment packages to suit every unique requirement.</p>
+                    <ul class="site_footer_social">
+                        <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                    </ul>
+
+                </div>
+                <div class="col-lg-4 site_ql_col mb-4">
+                    <h5 class="site_footer_title">Quick Links </h5>
+                    <ul class="site_footer_links">
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="employees.html">Employees</a></li>
+                        <li><a href="employers.html">Employers</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+
+                    </ul>
+
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="site_footer_title">Contact Details </h5>
+                    <ul class="site_contact_list list-unstyled">
+                        <li><i class="fas fa-map-marker-alt"></i>7007 Islington Avenue, Unit 2, Woodbridge, L4L 4T5</li>
+                        <li><i class="fas fa-phone"></i><a href="tel:+19055539505">+1 905 553 9505</a></li>
+                        <li><i class="far fa-envelope"></i><a href="mailto:info@anmstaffing.ca">info@anmstaffing.ca</a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <hr class="site_hr">
+
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p class="mb-0">Copyright © 2022 ANM Staffing</p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- Footer end -->
+
+
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+
+    <script src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='owlcarousel/owl.carousel.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.validate.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/script.js')}}"></script>
+    
+    
+</body>
+<script>
+    function validateSize(input) {
+        const fileSize = input.files[0].size / 1024 / 1024; // in MiB
+        if (fileSize > 2) {
+            alert('File size exceeds 2 MiB');
+            // $(file).val(''); //for clearing with Jquery
+        } else {
+            // Proceed further
+        }
+    }
+</script>
+<script>
+    function initialize() {
+        var input = document.getElementById('address');
+        new google.maps.places.Autocomplete(input, {
+            componentRestrictions: {
+                country: 'ca'
+            }
+        });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+
+</script>
+<script>
+    window.onload = (event) => {
+        initMultiselect();
+    };
+
+    function initMultiselect() {
+        checkboxStatusChange();
+
+        document.addEventListener("click", function (evt) {
+            var flyoutElement = document.getElementById('Preferredlocation'),
+                targetElement = evt.target; // clicked element
+
+            do {
+                if (targetElement == flyoutElement) {
+                    // This is a click inside. Do nothing, just return.
+                    //console.log('click inside');
+                    return;
+                }
+
+                // Go up the DOM
+                targetElement = targetElement.parentNode;
+            } while (targetElement);
+
+            // This is a click outside.
+            toggleCheckboxArea(true);
+            //console.log('click outside');
+        });
+    }
+
+    function checkboxStatusChange() {
+        var multiselect = document.getElementById("mySelectLabel");
+        var multiselectOption = multiselect.getElementsByTagName('option')[0];
+
+        var values = [];
+        var checkboxes = document.getElementById("mySelectOptions");
+        var checkedCheckboxes = checkboxes.querySelectorAll('input[type=checkbox]:checked');
+
+        for (const item of checkedCheckboxes) {
+            var checkboxValue = item.getAttribute('value');
+            values.push(checkboxValue);
+        }
+
+        var dropdownValue = "Select the Location";
+        if (values.length > 0) {
+            dropdownValue = values.join(', ');
+        }
+
+        multiselectOption.innerText = dropdownValue;
+        //console.log(checkedCheckboxes);
+        //console.log(checkboxValue);
+        console.log(dropdownValue);
+        //   var mpref_lo = document.getElementById("pref_lo");
+
+        document.getElementById("pref_lo").value = dropdownValue;
+
+    }
+
+    function toggleCheckboxArea(onlyHide = false) {
+        var checkboxes = document.getElementById("mySelectOptions");
+        var displayValue = checkboxes.style.display;
+
+        if (displayValue != "block") {
+            if (onlyHide == false) {
+                checkboxes.style.display = "block";
+            }
+        } else {
+            checkboxes.style.display = "none";
+        }
+    }
+    console.log()
+</script>
+
+
+</html>

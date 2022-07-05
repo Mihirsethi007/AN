@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Portal - ANM Staffing</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <script src="https://kit.fontawesome.com/0de347ad55.js" crossorigin="anonymous"></script>
+
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='owlcarousel/owl.carousel.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='owlcarousel/owl.theme.default.min.css') }}">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+  <!-- Header start -->
+
+  <nav id="mainNav" class="site_navbar navbar navbar-expand-lg bg-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/manager">Manager</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          
+          <li class="nav-item">
+            <a class="btn btn-primary mt-1" href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>
+              Logout</a>
+          </li>
+        </ul>
+
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header end -->
+
+  <!-- Banner Section start -->
+
+  <section class="site_subheader_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center text-white">
+          <h1 class="site_subheader_section_title">Manager Portal</h1>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Banner Section end -->
+
+  <!-- Admin Portal start -->
+
+  <section class="site_section_wrapper">
+
+    <div class="container">
+
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+
+          <div class="border bg-light rounded-3 p-5">
+            <!-- Form-->
+
+
+
+
+
+            <div class="row mb-5 align-items-center">
+              <div class="col-lg-10">
+                <div class="row ">
+                  <div class="col-lg-3 mb-4">
+                    <label for="language" class="form-label">Preferred Language</label>
+                    <select id="language" class="form-select" name="language">
+                      <option selected>All</option>
+                      <option>English</option>
+                      <option>French</option>
+                      <option>Spanish</option>
+                      <option>Vietnamese</option>
+                      <option>Mandarin</option>
+                      <option>Cantonese</option>
+                      <option>Filipino</option>
+                      <option>Telugu</option>
+                      <option>Hindi</option>
+                      <option>Punjabi</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-3 mb-4">
+                    <label for="job" class="form-label">Job Categories</label>
+                    <select id="job" class="form-select" name="job" onChange="changecat(this.value);">
+                      <option selected>All</option>
+                      <option value="General labor">General labor</option>
+                      <option value="Driving">Driving</option>
+                      <option value="Forklift">Forklift</option>
+                      <option value="Subtitle">Subtitle</option>
+                      <option value="Welder">Welder</option>
+                      <option value="CNC operator">CNC operator</option>
+                      <option value="Warehouse">Warehouse</option>
+                      <option value="Office">Office</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-3 mb-4">
+                    <label for="sjob" class="form-label">Job Sub-Categories</label>
+                    <select id="sjob" class="form-select" name="sjob">
+                      <option></option>
+                    </select>
+                  </div>
+                  <div class="col-lg-3 mb-4" id="exp" style="display: none;">
+                    <label for="Experience" class="form-label">Experience</label>
+                    <!-- <input  type="text" id="Experience" name="Experience"  placeholder="0" > -->
+                    <input class="form-select" type="text" id="Experience" placeholder="0" name="Experience"
+                      style="border-radius: 5px; border: 1px solid #d9dee3">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-2">
+                <a type="submit" onclick="getdata()" class="btn btn-primary align-middle"><i
+                    class="fa-solid fa-filter"></i> Search</a>
+              </div>
+
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-lg-4 ms-auto">
+                <div class="input-group ">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+                  <input type="text" id="locationfilter" onkeyup="myFunction()" class="form-control"
+                    placeholder="Search for Location" aria-describedby="basic-addon1">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="table-responsive">
+                  <table id="recieved_data" class="site_ap_table table table-success table-striped border">
+                    {% block content %}
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <!-- <th>Address</th> -->
+                        <th>Phone no</th>
+                        <th class="sp">Job candidate is looking for</th>
+                        <th>Preferred Lang.</th>
+                        <th>Experience</th>
+                        <th>Location</th>
+                        <th>Link to Profile</th>
+                        <th>Review SMS</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% if value %}
+                      {% for row in value %}
+                      <tr>
+
+                        <td>{{row[2]}}</td>
+                        <!-- <td>{{row[3]}}</td> -->
+                        <td>{{row[4]}}</td>
+                        <td class="sp">{{row[6]}}</td>
+                        <td>{{row[5]}}</td>
+                        <td>{{row[0]}}</td>
+
+
+                        <td>{{row[7]}}</td>
+                        <td><a target="_blank" href="/exi?ph={{row[1]}}">view profile</a></td>
+                        <td><a href="/sms?ph={{row[1]}}">Send Review SMS</a></td>
+                      </tr>
+                      {% endfor %}
+                      {% else %}
+                      <tr style="background-color: rgba(242, 242, 242, 0.985);text-align: center;">
+                        <td colspan="6" style="text-align: center; vertical-align: middle;padding: 20px 0px;">No record
+                          Found.</td>
+                      </tr>
+                      {% endif %}
+                    </tbody>
+
+                    {% endblock content %}
+
+                  </table>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+
+
+  
+
+
+
+  <!-- Footer Start -->
+
+  <footer class="site_footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <h5 class="site_footer_title">ANM Staffing </h5>
+          <p>ANM Staffing offers excellent service and care as per the market standard, with tailored recruitment
+            packages to suit every unique requirement.</p>
+          <ul class="site_footer_social">
+            <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+            <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
+          </ul>
+
+        </div>
+        <div class="col-lg-4 site_ql_col mb-4">
+          <h5 class="site_footer_title">Quick Links </h5>
+          <ul class="site_footer_links">
+            <li><a href="/about">About</a></li>
+            <li><a href="/employees">Employees</a></li>
+            <li><a href="/employers">Employers</a></li>
+            <li><a href="/contact">Contact</a></li>
+
+          </ul>
+
+        </div>
+        <div class="col-lg-4">
+          <h5 class="site_footer_title">Contact Details </h5>
+          <ul class="site_contact_list list-unstyled">
+            <li><i class="fas fa-map-marker-alt"></i>7007 Islington Avenue, Unit 2, Woodbridge, L4L 4T5</li>
+            <li><i class="fas fa-phone"></i><a href="tel:+19055539505">+1 905 553 9505</a></li>
+            <li><i class="far fa-envelope"></i><a href="mailto:info@anmstaffing.ca">info@anmstaffing.ca</a></li>
+          </ul>
+
+        </div>
+
+      </div>
+
+      <hr class="site_hr">
+
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <p class="mb-0">Copyright © 2022 ANM Staffing</p>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Footer end -->
+
+  <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+
+  <script src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='owlcarousel/owl.carousel.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/jquery.validate.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/script.js')}}"></script>
+
+
+  <script>
+    var jobSUBCategory = {
+      "General labor": ["All", "Packaging", "Heavy Lifting", "Sorting", "Sanitation", "Warehouse", "Assembly", "Production Line"],
+      "Driving": ["All", "G Driver", "G Driver with own car", "Sorting", "GZ Driver", "DZ Driver", "AZ Driver"],
+      "Forklift": ["All", "Forklift"],
+      "Subtitle": ["All", "Walkie Operator", "Raymond Reach Operator", "Counter Balance Propane", "Counter Balance Electric", "Order Picker", "Pallet Picker"],
+      "Welder": ["All", "Tig Welder", "Mig Welder", "Ro Welder", "Gas Welder"],
+      "CNC operator": ["All", "Lathe Machine Operator", "Milling Machine Operator", "Laser Machine Operator", "Plasma Cutting Machine"],
+      "Warehouse": ["All", "Warehouse Supervisor", "Shipping/Receiving"],
+      "Office": ["All", "Office Admin", "Receptionist", "Call Center Executive", "Book Keeper", "Payroll Assistant"]
+    }
+    function changecat(value) {
+      if (value.length == 0) document.getElementById("sjob").innerHTML = "<option></option>";
+      else {
+        var categoryOptions = "";
+        for (categoryId in jobSUBCategory[value]) {
+          categoryOptions += "<option>" + jobSUBCategory[value][categoryId] + "</option>";
+        }
+        document.getElementById("sjob").innerHTML = categoryOptions;
+      }
+    }
+  </script>
+
+  <script>
+    function getdata() {
+      var server_data =
+      {
+        "language": $('#language').val(),
+        "job": $('#job').val(),
+        "sjob": $('#sjob').val(),
+        // "location": $('#location').val(),
+        "Exp": $('#Experience').val()
+      };
+      $.ajax({
+        method: "POST",
+        url: "/getcusdata",
+        data: JSON.stringify(server_data),
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (data) {
+          if (data.status == 404) {
+            alert("At the moment server is down")
+          }
+          $("#recieved_data tbody").empty();
+          var data = data.data
+          if (data.length == 0) {
+            $("tbody").append(
+              `<tr style="background-color: rgba(242, 242, 242, 0.985);text-align: center;">
+            <td colspan="9" style="text-align: center; vertical-align: middle;padding: 20px 0px;">No record Found.</td>   
+          </tr>`
+            )
+          }
+          else {
+            $.each(data, function (key, value) {
+              $("tbody").append(
+                "<tr><td style='padding: 10px'>" + value[3] + "</td><td>" + value[5] + "</td><td>" + value[7] + "</td><td>" + value[6] + "</td><td>" + value[0] + "</td><td>" + value[2] + "</td><td> <a target='_blank' href='/exi?ph=" + value[1] + "'>view profile</a>" + "</td><td> <a target='_blank' href='/sms?ph=" + value[1] + "'>Send Review SMS</a>" + "</td></tr>"
+                // "<tr><td style='padding: 10px'>" + value[3] + "</td><td>" + value[4] + "</td><td>" + value[5] + "</td><td>" + value[7] + "</td><td>" + value[6] + "</td><td>" + value[0] + "</td><td>" + value[2] + "</td><td> <a target='_blank' href='/exi?ph=" + value[1] + "'>view profile</a>" + "</td></tr>"
+              )
+            })
+
+          }
+
+
+          // console.log('got it',data)
+        },
+        error: function (data) {
+          console.log("error")
+          // console.log(data)
+          alert(data.message);
+        }
+      })
+    }
+  </script>
+
+  <script>
+
+    const cb = () => {
+
+      const inputEl = document.getElementById("exp");
+      if ($('#sjob').val() == "All" || $('#job').val() == 'All') {
+        inputEl.style.display = "none";
+      }
+      else {
+        inputEl.style.display = "block";
+      }
+      // console.log($('#sjob').value, $('#sjob').value)
+    };
+    const elem2 = document.getElementById('job');
+    elem2.addEventListener('change', cb)
+    const elem = document.getElementById('sjob');
+    elem.addEventListener('change', cb);
+
+  </script>
+
+  <script>
+    function myFunction() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("locationfilter");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("recieved_data");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[5];
+        // console.log(filter,td)
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+
+  </script>
+
+
+</body>
+
+</html>
