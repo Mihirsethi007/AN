@@ -51,7 +51,6 @@ p
 
 .shrink {
     background-color: #000 !important;
-    background-color: #000 !important;
 }
 
 .navbar-toggler
@@ -433,6 +432,20 @@ font-weight: 600;
     color: #f89529;
 }
 
+.site_questionnair_card
+{
+    font-size: 14px;
+    height: 100%;
+}
+.site_questionnair_card_thumb
+{
+    width: 120px;
+}
+.site_questionnair_card_title
+{
+    font-weight: 600;
+    color: #000;
+}
 
 
 /* Content end */
@@ -592,7 +605,27 @@ font-weight: 600;
 }
 
 /* Step form */
-
+.site_step_form_tabs li 
+{
+    margin: 0 5px;
+}
+.site_step_form_tabs li a
+{
+    display: block;
+    background-color: #000;
+    color: #fff;
+    padding: 15px 30px;
+    width: 100%;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+.site_step_form_tabs li.site_sft_active a
+{
+    background-color: #f89529;
+    color: #000;
+}
 #myForm .tab {
     display: none;
 }
@@ -654,6 +687,16 @@ font-weight: 600;
     .site_ql_col {
         padding-left: 12px;
     }
+
+    .site_step_form_tabs
+    {
+        flex-flow: column;
+    }
+    .site_step_form_tabs li
+    {
+        margin-bottom: 10px;
+    }
+
 }
 
 
