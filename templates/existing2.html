@@ -4,81 +4,81 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>User Profile - ANM Staffing</title>
+    <title>User Detail - ANM Staffing</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">    
 
-    <script src="https://kit.fontawesome.com/0de347ad55.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/0de347ad55.js" crossorigin="anonymous"></script>    
+
 
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='owlcarousel/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='owlcarousel/owl.theme.default.min.css') }}">
-
+  
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
+  
     <style>
         .multiselect {
-            width: 100%;
-        }
+  width: 100%;
+}
 
-        .selectBox {
-            position: relative;
-        }
+.selectBox {
+  position: relative;
+}
 
-        .selectBox select {
-            width: 100%;
-        }
+.selectBox select {
+  width: 100%;
+}
 
-        .overSelect {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-        }
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
 
-        #mySelectOptions {
-            display: none;
-            border: 0.5px #7c7c7c solid;
-            background-color: #ffffff;
-            max-height: 150px;
-            overflow-y: scroll;
-        }
+#mySelectOptions {
+  display: none;
+  border: 0.5px #7c7c7c solid;
+  background-color: #ffffff;
+  max-height: 150px;
+  overflow-y: scroll;
+}
 
-        #mySelectOptions label {
-            display: block;
-            font-weight: normal;
-            display: block;
-            white-space: nowrap;
-            min-height: 1.2em;
-            background-color: #ffffff00;
-            padding: 0 2.25rem 0 .75rem;
-            /* padding: .375rem 2.25rem .375rem .75rem; */
-        }
+#mySelectOptions label {
+  display: block;
+  font-weight: normal;
+  display: block;
+  white-space: nowrap;
+  min-height: 1.2em;
+  background-color: #ffffff00;
+  padding: 0 2.25rem 0 .75rem;
+  /* padding: .375rem 2.25rem .375rem .75rem; */
+}
 
-        #mySelectOptions label:hover {
-            background-color: #1e90ff;
-        }
-
+#mySelectOptions label:hover {
+  background-color: #1e90ff;
+}
+        
         /* body, .page-wrapper,
-    .wrapper,        
-    .card-heading{
-        background-image: url({{url_for( 'static', filename='img/bg.png')}});
-        height: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-    /* .card-body{
-        width: 100px;
-    } */
+        .wrapper,        
+        .card-heading{
+            background-image: url({{url_for( 'static', filename='img/bg.png')}});
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        /* .card-body{
+            width: 100px;
+        } */
     </style>
-    <!-- Script for google location address autocomplete api -->
-    <script async defer
+
+<script async defer
         src="//maps.googleapis.com/maps/api/js?key=AIzaSyASACYmJYRTtC9LG76dt1-xld__TTkmRRc&libraries=places&callback=initialize"></script>
 
 </head>
@@ -148,7 +148,7 @@
                     <div class="border bg-light rounded-3 p-5">
                         <!-- Form-->
 
-                        <form id="formsave" action="/savedata" method="POST"  enctype="multipart/form-data">
+                        <form id="form1" action="/editsavedata" method="POST" enctype="multipart/form-data">
                             <!-- One "tab" for each step in the form: -->
 
 
@@ -164,33 +164,34 @@
                                     <div class="col-lg-6 mb-4">
                                         <label class="form-label">Full Name</label>
                                         <input type="text" class="form-control" name="fullname" id="fullname"
-                                            placeholder="">
+                                            placeholder="" value="{{ data[0][1] if data[0][1]!='' and data[0][1]!=none }}">
                                     </div>
 
                                     <div class="col-lg-6 mb-4">
                                         <label class="form-label">Address</label>
-                                        <input type="text" class="form-control" name="address" id="address"
-                                            placeholder="">
+                                        <textarea id="address" name="address" class="form-control"
+                                                placeholder="Address" aria-label="Address"
+                                                aria-describedby="Address">{{ data[0][2] if data[0][2]!='' and data[0][2]!=none }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-lg-6 mb-4">
                                         <label class="form-label">Email</label>
-                                        <input type="email" class="form-control" name="email" id="email" placeholder="">
+                                        <input type="email" class="form-control" name="email" id="email" placeholder="" value="{{ data[0][4] if data[0][2]!='' and data[0][4]!=none }}">
                                     </div>
                                     <div class="mb-3" hidden>
                                         <label class="form-label" for="login-phone">Login Phone No</label>
                                         <div class="input-group input-group-merge">
                                             <span class="input-group-text"><i class="bx bx-phone"></i></span>
                                             <input readonly type="number" id="login-phone" name="login-phone"
-                                                class="form-control phone-mask" value="{{ ph_no }}"
+                                                class="form-control phone-mask" value="{{ data[0][0] }}" 
                                                 aria-label="658 799 8941" aria-describedby="login-phone"> </input>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-4">
                                         <label class="form-label">Phone No</label>
-                                        <input type="tel" class="form-control" name="phone" id="phone" placeholder="">
+                                        <input type="tel" class="form-control" name="phone" id="phone" placeholder=""  value="{{ data[0][27] if data[0][27]!='' and data[0][27]!=none }}" >
                                     </div>
                                 </div>
 
@@ -198,29 +199,42 @@
                                     <div class="col-lg-4 mb-4">
                                         <label class="form-label">DOB</label>
                                         <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth"
-                                            placeholder="">
+                                            placeholder=""  value="{{ data[0][3]  if data[0][3]!='' and data[0][3]!=none }}">
                                     </div>
                                     <div class="col-lg-4 mb-4">
                                         <label class="form-label">Gender</label>
                                         <select class="form-control" name="gender" id="gender">
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                            <option value="other">Other</option>
+                                            <option value="male" {{ 'selected' if data[0][5]=='male' and data[0][5] !=""
+                                                }}>Male</option>
+                                            <option value="female" {{ 'selected' if data[0][5]=='female' and data[0][5]
+                                                !="" }}>Female</option>
+                                            <option value="other" {{ 'selected' if data[0][5]=='other' and data[0][5]
+                                                !="" }}>Other</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-4 mb-4">
                                         <label class="form-label">Preferred Language</label>
                                         <select class="form-control" name="language" id="language">
-                                            <option>English</option>
-                                            <option>French</option>
-                                            <option>Spanish</option>
-                                            <option>Vietnamese</option>
-                                            <option>Mandarin</option>
-                                            <option>Cantonese</option>
-                                            <option>Filipino</option>
-                                            <option>Telugu</option>
-                                            <option>Hindi</option>
-                                            <option>Punjabi</option>
+                                            <option {{ 'selected' if data[0][6]=='English' and data[0][6] !="" }}>
+                                                English</option>
+                                            <option {{ 'selected' if data[0][6]=='French' and data[0][6] !="" }}>French
+                                            </option>
+                                            <option {{ 'selected' if data[0][6]=='Spanish' and data[0][6] !="" }}>
+                                                Spanish</option>
+                                            <option {{ 'selected' if data[0][6]=='Vietnamese' and data[0][6] !="" }}>
+                                                Vietnamese</option>
+                                            <option {{ 'selected' if data[0][6]=='Mandarin' and data[0][6] !="" }}>
+                                                Mandarin</option>
+                                            <option {{ 'selected' if data[0][6]=='Cantonese' and data[0][6] !="" }}>
+                                                Cantonese</option>
+                                            <option {{ 'selected' if data[0][6]=='Filipino' and data[0][6] !="" }}>
+                                                Filipino</option>
+                                            <option {{ 'selected' if data[0][6]=='Telugu' and data[0][6] !="" }}>Telugu
+                                            </option>
+                                            <option {{ 'selected' if data[0][6]=='Hindi' and data[0][6] !="" }}>Hindi
+                                            </option>
+                                            <option {{ 'selected' if data[0][6]=='Punjabi' and data[0][6] !="" }}>
+                                                Punjabi</option>
                                         </select>
                                     </div>
                                 </div>
@@ -245,13 +259,13 @@
                                     <div class="col-lg-6 mb-4">
                                         <label class="form-label">Name of previous employer</label>
                                         <input type="text" class="form-control" name="employer_name" id="employer_name"
-                                            placeholder="">
+                                            placeholder=""  value="{{ data[0][7]  if data[0][7] != '' and data[0][7] != none}}" >
                                     </div>
 
                                     <div class="col-lg-6 mb-4">
                                         <label class="form-label">Years of work</label>
                                         <input type="text" class="form-control" name="employeedYears"
-                                            id="employeedYears" placeholder="">
+                                            id="employeedYears" placeholder="" value="{{ data[0][8]  if data[0][8] != '' and data[0][8] != none}}" >
                                     </div>
                                 </div>
 
@@ -259,12 +273,12 @@
                                     <div class="col-lg-6 mb-4">
                                         <label class="form-label">Address</label>
                                         <input type="text" class="form-control" name="employer_address"
-                                            id="employer_address" placeholder="">
+                                            id="employer_address" placeholder=""  value="{{ data[0][9]  if data[0][9] != '' and data[0][9] != none}}" >
                                     </div>
                                     <div class="col-lg-6 mb-4">
                                         <label class="form-label">Type of work</label>
                                         <input type="text" class="form-control" name="work_nature" id="work_nature"
-                                            placeholder="">
+                                            placeholder="" value="{{ data[0][10]  if data[0][10] != '' and data[0][10] != none}}">
                                     </div>
                                 </div>
 
@@ -303,26 +317,33 @@
                                         <label class="form-label">General Labour</label>
                                         <select class="form-control valid" name="typeGeneral" id="defaultSelect"
                                             aria-invalid="false">
-                                            <option>Packaging</option>
-                                            <option>Heavy Lifting</option>
-                                            <option>Sorting</option>
-                                            <option>Sanitation</option>
-                                            <option>Warehouse</option>
-                                            <option>Assembly</option>
-                                            <option>Production Line</option>
+                                            <option {{ 'selected' if data[0][11]=='Packaging' and data[0][11] !=""
+                                                    }}>Packaging</option>
+                                                <option {{ 'selected' if data[0][11]=='Heavy Lifting' and data[0][11]
+                                                    !="" }}>Heavy Lifting</option>
+                                                <option {{ 'selected' if data[0][11]=='Sorting' and data[0][11] !="" }}>
+                                                    Sorting</option>
+                                                <option {{ 'selected' if data[0][11]=='Sanitation' and data[0][11] !=""
+                                                    }}>Sanitation</option>
+                                                <option {{ 'selected' if data[0][11]=='Warehouse' and data[0][11] !=""
+                                                    }}>Warehouse</option>
+                                                <option {{ 'selected' if data[0][11]=='Assembly' and data[0][11] !=""
+                                                    }}>Assembly</option>
+                                                <option {{ 'selected' if data[0][11]=='Production Line' and data[0][11]
+                                                    !="" }}>Production Line</option>
                                         </select>
                                     </div>
 
                                     <div class="col-lg-4 mb-4">
                                         <label class="form-label">Experience</label>
                                         <input type="text" min=0 class="form-control" name="typeGeneralhistory"
-                                            id="basic-icon-default-phone" placeholder="">
+                                            id="basic-icon-default-phone" placeholder="" value="{{ data[0][12] if data[0][12] != '' and data[0][12] != none }}">
                                     </div>
 
                                     <div class="col-lg-4 mb-4 align-self-center">
                                         <label class="form-label mb-0">Previous employer</label>
                                         <input type="text" class="form-control" name="employer_name2"
-                                            id="employer_name2">
+                                            id="employer_name2" value="{{data[0][29] if data[0][29] != '' and data[0][29] != none}}">
 
                                     </div>
                                 </div>
@@ -349,24 +370,30 @@
                                         <label class="form-label">Driving</label>
                                         <select class="form-control valid" name="typeDriving" id="defaultSelect"
                                             aria-invalid="false">
-                                            <option>G Driver</option>
-                                            <option>G Driver with own car</option>
-                                            <option>Sorting</option>
-                                            <option>GZ Driver</option>
-                                            <option>DZ Driver</option>
-                                            <option>AZ Driver</option>
+                                            <option {{ 'selected' if data[0][13]=='G Driver' and data[0][13] !=""
+                                                    }}>G Driver</option>
+                                                <option {{ 'selected' if data[0][13]=='G Driver with own car' and
+                                                    data[0][13] !="" }}>G Driver with own car</option>
+                                                <option {{ 'selected' if data[0][13]=='Sorting' and data[0][13] !="" }}>
+                                                    Sorting</option>
+                                                <option {{ 'selected' if data[0][13]=='GZ Driver' and data[0][13] !=""
+                                                    }}>GZ Driver</option>
+                                                <option {{ 'selected' if data[0][13]=='DZ Driver' and data[0][13] !=""
+                                                    }}>DZ Driver</option>
+                                                <option {{ 'selected' if data[0][13]=='AZ Driver' and data[0][13] !=""
+                                                    }}>AZ Driver</option>
                                         </select>
                                     </div>
 
                                     <div class="col-lg-4 mb-4">
                                         <label class="form-label">Experience</label>
                                         <input type="text" min=0 class="form-control" name="typeGeneralhistory1"
-                                            id="basic-icon-default-phone" placeholder="">
+                                            id="basic-icon-default-phone" placeholder="" value="{{ data[0][14] if data[0][14] != '' and data[0][14] != none }}" >
                                     </div>
                                     <div class="col-lg-4 mb-4 align-self-center">
                                         <label class="form-label mb-0">Previous employer</label>
                                         <input type="text" class="form-control" name="employer_name3"
-                                            id="employer_name3">
+                                            id="employer_name3"  value="{{data[0][30] if data[0][30] != '' and data[0][30] != none}}" >
 
                                     </div>
 
@@ -393,19 +420,20 @@
                                         <label class="form-label">Forklift</label>
                                         <select class="form-control valid" name="typeForklift" id="defaultSelect"
                                             aria-invalid="false">
-                                            <option>Forklift</option>
+                                            <option {{ 'selected' if data[0][15]=='other' and data[0][15] !="" }}>
+                                                Forklift</option>
                                         </select>
                                     </div>
 
                                     <div class="col-lg-4 mb-4">
                                         <label class="form-label">Experience</label>
                                         <input type="text" min=0 class="form-control" name="typeGeneralhistor2"
-                                            id="basic-icon-default-phone" placeholder="">
+                                            id="basic-icon-default-phone" placeholder=""  value="{{ data[0][16] if data[0][16] != '' and data[0][16] != none }}" >
                                     </div>
                                     <div class="col-lg-4 mb-4 align-self-center">
                                         <label class="form-label mb-0">Previous employer</label>
                                         <input type="text" class="form-control" name="employer_name4"
-                                            id="employer_name4">
+                                            id="employer_name4" value="{{data[0][31] if data[0][31] != '' and data[0][31] != none}}" >
                                     </div>
 
                                 </div>
@@ -431,24 +459,30 @@
                                         <label class="form-label">Subtitle</label>
                                         <select class="form-control valid" name="typeWalkie" id="defaultSelect"
                                             aria-invalid="false">
-                                            <option>Walkie Operator</option>
-                                            <option>Raymond Reach Operator</option>
-                                            <option>Counter Balance Propane</option>
-                                            <option>Counter Balance Electric</option>
-                                            <option>Order Picker</option>
-                                            <option>Pallet Picker</option>
+                                            <option {{ 'selected' if data[0][17]=='Walkie Operator' and data[0][17]
+                                                    !="" }}>Walkie Operator</option>
+                                                <option {{ 'selected' if data[0][17]=='Raymond Reach Operator' and
+                                                    data[0][17] !="" }}>Raymond Reach Operator</option>
+                                                <option {{ 'selected' if data[0][17]=='Counter Balance Propane' and
+                                                    data[0][17] !="" }}>Counter Balance Propane</option>
+                                                <option {{ 'selected' if data[0][17]=='Counter Balance Electric' and
+                                                    data[0][17] !="" }}>Counter Balance Electric</option>
+                                                <option {{ 'selected' if data[0][17]=='Order Picker' and data[0][17]
+                                                    !="" }}>Order Picker</option>
+                                                <option {{ 'selected' if data[0][17]=='Pallet Picker' and data[0][17]
+                                                    !="" }}>Pallet Picker</option>
                                         </select>
                                     </div>
 
                                     <div class="col-lg-4 mb-4">
                                         <label class="form-label">Experience</label>
                                         <input type="text" min=0 class="form-control" name="typeGeneralhistory3"
-                                            id="basic-icon-default-phone" placeholder="">
+                                            id="basic-icon-default-phone" placeholder="" value="{{ data[0][18] if data[0][18] != '' and data[0][18] != none }}" >
                                     </div>
                                     <div class="col-lg-4 mb-4 align-self-center">
                                         <label class="form-label mb-0">Previous employer</label>
                                         <input type="text" class="form-control" name="employer_name5"
-                                            id="employer_name5">
+                                            id="employer_name5"  value="{{data[0][32] if data[0][32] != '' and data[0][32] != none}}" >
 
                                     </div>
 
@@ -475,22 +509,26 @@
                                         <label class="form-label">Welder</label>
                                         <select class="form-control valid" name="typeWelder" id="defaultSelect"
                                             aria-invalid="false">
-                                            <option>Tig Welder</option>
-                                            <option>Mig Welder</option>
-                                            <option>Ro Welder</option>
-                                            <option>Gas Welder</option>
+                                            <option {{ 'selected' if data[0][19]=='Tig Welder' and data[0][19] !=""
+                                                    }}>Tig Welder</option>
+                                                <option {{ 'selected' if data[0][19]=='Mig Welder' and data[0][19] !=""
+                                                    }}>Mig Welder</option>
+                                                <option {{ 'selected' if data[0][19]=='Ro Welder' and data[0][19] !=""
+                                                    }}>Ro Welder</option>
+                                                <option {{ 'selected' if data[0][19]=='Gas Welder' and data[0][19] !=""
+                                                    }}>Gas Welder</option>
                                         </select>
                                     </div>
 
                                     <div class="col-lg-4 mb-4">
                                         <label class="form-label">Experience</label>
                                         <input type="text" min=0 class="form-control" name="typeGeneralhistory4"
-                                            id="basic-icon-default-phone" placeholder="">
+                                            id="basic-icon-default-phone" placeholder="" value="{{ data[0][20] if data[0][20] != '' and data[0][20] != none }}" >
                                     </div>
                                     <div class="col-lg-4 mb-4 align-self-center">
                                         <label class="form-label mb-0">Previous employer</label>
                                         <input type="text" class="form-control" name="employer_name6"
-                                            id="employer_name6">
+                                            id="employer_name6" value="{{data[0][33] if data[0][33] != '' and data[0][33] != none}}" >
 
                                     </div>
 
@@ -518,22 +556,26 @@
                                         <label class="form-label">CNC Operator</label>
                                         <select class="form-control valid" name="typeCNC" id="defaultSelect"
                                             aria-invalid="false">
-                                            <option>Lathe Machine Operator</option>
-                                            <option>Milling Machine Operator</option>
-                                            <option>Laser Machine Operator</option>
-                                            <option>Plasma Cutting Machine</option>
+                                            <option {{ 'selected' if data[0][21]=='Lathe Machine Operator' and
+                                                    data[0][21] !="" }}>Lathe Machine Operator</option>
+                                                <option {{ 'selected' if data[0][21]=='Milling Machine Operator' and
+                                                    data[0][21] !="" }}>Milling Machine Operator</option>
+                                                <option {{ 'selected' if data[0][21]=='Laser Machine Operator' and
+                                                    data[0][21] !="" }}>Laser Machine Operator</option>
+                                                <option {{ 'selected' if data[0][21]=='Plasma Cutting Machine' and
+                                                    data[0][21] !="" }}>Plasma Cutting Machine</option>
                                         </select>
                                     </div>
 
                                     <div class="col-lg-4 mb-4">
                                         <label class="form-label">Experience</label>
                                         <input type="text" min=0 class="form-control" name="typeGeneralhistory5"
-                                            id="basic-icon-default-phone" placeholder="">
+                                            id="basic-icon-default-phone" placeholder="" value="{{data[0][22] if data[0][22] != '' and data[0][22] != none}}" >
                                     </div>
                                     <div class="col-lg-4 mb-4 align-self-center">
                                         <label class="form-label mb-0">Previous employer</label>
                                         <input type="text" class="form-control" name="employer_name7"
-                                            id="employer_name7">
+                                            id="employer_name7" value="{{data[0][34] if data[0][34] != '' and data[0][34] != none}}">
 
                                     </div>
 
@@ -560,20 +602,22 @@
                                         <label class="form-label">Warehouse</label>
                                         <select class="form-control valid" name="typeWarehouse" id="defaultSelect"
                                             aria-invalid="false">
-                                            <option>Warehouse Supervisor</option>
-                                            <option>Shipping/Receiving</option>
+                                            <option {{ 'selected' if data[0][23]=='Warehouse Supervisor' and
+                                                    data[0][23] !="" }}>Warehouse Supervisor</option>
+                                                <option {{ 'selected' if data[0][23]=='Shipping/Receiving' and
+                                                    data[0][23] !="" }}>Shipping/Receiving</option>
                                         </select>
                                     </div>
 
                                     <div class="col-lg-4 mb-4">
                                         <label class="form-label">Experience</label>
                                         <input type="text" min=0 class="form-control" name="typeGeneralhistory6"
-                                            id="basic-icon-default-phone" placeholder="">
+                                            id="basic-icon-default-phone" placeholder="" value="{{data[0][24] if data[0][24] != '' and data[0][24] != none}}">
                                     </div>
                                     <div class="col-lg-4 mb-4 align-self-center">
                                         <label class="form-label mb-0">Previous employer</label>
                                         <input type="text" class="form-control" name="employer_name8"
-                                            id="employer_name8">
+                                            id="employer_name8" value="{{data[0][35] if data[0][35] != '' and data[0][35] != none}}">
 
                                     </div>
 
@@ -601,23 +645,28 @@
                                         <label class="form-label">Office</label>
                                         <select class="form-control valid" name="typeOffice" id="defaultSelect"
                                             aria-invalid="false">
-                                            <option>Office Admin</option>
-                                            <option>Receptionist</option>
-                                            <option>Call Center Executive</option>
-                                            <option>Book Keeper</option>
-                                            <option>Payroll Assistant</option>
+                                            <option {{ 'selected' if data[0][25]=='Office Admin' and data[0][25]
+                                                    !="" }}>Office Admin</option>
+                                                <option {{ 'selected' if data[0][25]=='Receptionist' and data[0][25]
+                                                    !="" }}>Receptionist</option>
+                                                <option {{ 'selected' if data[0][25]=='Call Center Executive' and
+                                                    data[0][25] !="" }}>Call Center Executive</option>
+                                                <option {{ 'selected' if data[0][25]=='Book Keeper' and data[0][25] !=""
+                                                    }}>Book Keeper</option>
+                                                <option {{ 'selected' if data[0][25]=='Payroll Assistant' and
+                                                    data[0][25] !="" }}>Payroll Assistant</option>
                                         </select>
                                     </div>
 
                                     <div class="col-lg-4 mb-4">
                                         <label class="form-label">Experience</label>
                                         <input type="text" min=0 class="form-control" name="typeOfficehistory7"
-                                            id="basic-icon-default-phone" placeholder="">
+                                            id="basic-icon-default-phone" placeholder=""  value="{{data[0][26] if data[0][26] != '' and data[0][26] != none}}">
                                     </div>
                                     <div class="col-lg-4 mb-4 align-self-center">
                                         <label class="form-label mb-0">Previous employer</label>
                                         <input type="text" class="form-control" name="employer_name9"
-                                            id="employer_name9">
+                                            id="employer_name9" value="{{data[0][36] if data[0][36] != '' and data[0][36] != none}}" >
 
                                     </div>
 
@@ -688,24 +737,26 @@
                                         <div class="input-group">
                                             <input type="file" class="form-control" name="id_doc" id="inputGroupFile04"
                                                 aria-describedby="inputGroupFileAddon04" aria-label="Upload"
-                                                accept=".pdf" required>
+                                                accept=".pdf" />
                                         </div>
+                                        <a href="/download?ph={{data[0][0]}}&type=id" target="_blank">id.pdf</a>
                                     </div>
 
                                     <div class="col-lg-6 mb-4">
                                         <label class="form-label">Resume/Curriculum Vitae</label>
                                         <div class="input-group">
-                                            <input type="file" class="form-control" name="cv_doc" id="inputGroupFile04"
+                                            <input type="file" class="form-control" name="cv_doc" id="inputGroupFile043"
                                                 aria-describedby="inputGroupFileAddon04" aria-label="Upload"
-                                                accept=".pdf" required>
+                                                accept=".pdf" />
                                         </div>
+                                        <a href="/download?ph={{data[0][0]}}&type=cv" target="_blank">cv.pdf</a>
                                     </div>
                                 </div>
                                 <input type="number" id="ph_no" name="ph_no" class="form-control phone-mask"
-                                    placeholder="658 799 8941" aria-label="658 799 8941" aria-describedby="ph_no" hidden
-                                    value="{{ ph_no }}" />
+                                        placeholder="658 799 8941" aria-label="658 799 8941" aria-describedby="phone"
+                                        hidden value="{{ data[0][0] if data[0][0]!='' and data[0][0]!=none }}" />
 
-                                <input type="text" id="pref_lo" name="pref_lo" class="form-control phone-mask" hidden />
+                                        <input type="text" id="pref_lo" name="pref_lo" class="form-control phone-mask" hidden  />
 
                             </div>
 
@@ -717,11 +768,14 @@
 
                             <div class="mb-4">
                                 <div class="d-flex justify-content-between mt-5">
-                                    <button type="button" class="previous btn btn-secondary">Previous</button>
-                                    <button type="button" class="next btn btn-primary float-end">Next</button>
+                                    <!-- <button type="button" class="previous btn btn-secondary">Previous</button>
+                                    <button type="button" class="next btn btn-primary float-end">Next</button> -->
                                     <!--button type="button" class="next btn btn-primary submit float-end">Submit</button-->
-                                    <button  type="submit" class="btn btn-primary submit float-end">Submit</button>
-                                </div>
+                                    <button id="submitbtn" type="submit" class="btn btn-primary">Submit</button>
+                                    <div id="editbtndiv">
+                                        <button id="editbtn" onclick="editclick()" class="btn btn-primary"
+                                            type="button">Edit</button>
+                                    </div>                                </div>
                             </div>
 
                             <!-- <div class="site_required_alert"></div> -->
@@ -742,78 +796,221 @@
 
     </section>
 
-    <!-- About end -->
+<!-- Footer Start -->
 
+<footer class="site_footer">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-4 mb-4">
+              <h5 class="site_footer_title">ANM Staffing </h5>
+              <p>ANM Staffing offers excellent service and care as per the market standard, with tailored recruitment packages to suit every unique requirement.</p>
+              <ul class="site_footer_social">
+                <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
+            </ul>
 
+          </div>
+          <div class="col-lg-4 site_ql_col mb-4">
+              <h5 class="site_footer_title">Quick Links </h5>
+              <ul class="site_footer_links">
+                <li><a href="/about">About</a></li>
+                <li><a href="/employees">Employees</a></li>
+                <li><a href="/employers">Employers</a></li>
+                <li><a href="/contact">Contact</a></li>
 
+            </ul>
 
-
-
-
-    <!-- Footer Start -->
-
-    <footer class="site_footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h5 class="site_footer_title">ANM Staffing </h5>
-                    <p>ANM Staffing offers excellent service and care as per the market standard, with tailored
-                        recruitment packages to suit every unique requirement.</p>
-                    <ul class="site_footer_social">
-                        <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                        <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                        <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
-                    </ul>
-
-                </div>
-                <div class="col-lg-4 site_ql_col mb-4">
-                    <h5 class="site_footer_title">Quick Links </h5>
-                    <ul class="site_footer_links">
-                        <li><a href="/about">About</a></li>
-                        <li><a href="/employees">Employees</a></li>
-                        <li><a href="/employers">Employers</a></li>
-                        <li><a href="/contact">Contact</a></li>
-
-                    </ul>
-
-                </div>
-                <div class="col-lg-4">
-                    <h5 class="site_footer_title">Contact Details </h5>
-                    <ul class="site_contact_list list-unstyled">
-                        <li><i class="fas fa-map-marker-alt"></i>7007 Islington Avenue, Unit 2, Woodbridge, L4L 4T5</li>
-                        <li><i class="fas fa-phone"></i><a href="tel:+19055539505">+1 905 553 9505</a></li>
-                        <li><i class="far fa-envelope"></i><a href="mailto:info@anmstaffing.ca">info@anmstaffing.ca</a>
-                        </li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <hr class="site_hr">
-
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <p class="mb-0">Copyright © 2022 ANM Staffing</p>
-                </div>
-
-            </div>
+          </div>                
+          <div class="col-lg-4">
+            <h5 class="site_footer_title">Contact Details </h5>
+            <ul class="site_contact_list list-unstyled">
+              <li><i class="fas fa-map-marker-alt"></i>7007 Islington Avenue, Unit 2, Woodbridge, L4L 4T5</li>
+              <li><i class="fas fa-phone"></i><a href="tel:+19055539505">+1  905 553 9505</a></li>
+              <li><i class="far fa-envelope"></i><a href="mailto:info@anmstaffing.ca">info@anmstaffing.ca</a></li>
+            </ul>            
+            
         </div>
-    </footer>
 
-    <!-- Footer end -->
+      </div>
+
+          <hr class="site_hr">
+
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <p class="mb-0">Copyright © 2022 ANM Staffing</p>
+        </div>
+
+    </div>
+  </div>
+</footer>
+
+<!-- Footer end -->
 
 
-    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
 
-    <script src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='owlcarousel/owl.carousel.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='js/jquery.validate.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='js/script.js')}}"></script>
-    
-    
-</body>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+
+<script src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
+<script src="{{ url_for('static', filename='owlcarousel/owl.carousel.min.js')}}"></script>
+<script src="{{ url_for('static', filename='js/jquery.validate.min.js')}}"></script>
+<script src="{{ url_for('static', filename='js/script.js')}}"></script>
+
+
 <script>
+    window.onload = (event) => {
+initMultiselect();
+toggleCheckboxArea(true);
+};
+
+function initMultiselect() {
+checkboxStatusChange();
+
+document.addEventListener("click", function(evt) {
+var flyoutElement = document.getElementById('Preferredlocation'),
+  targetElement = evt.target; // clicked element
+
+do {
+  if (targetElement == flyoutElement) {
+    // This is a click inside. Do nothing, just return.
+    //console.log('click inside');
+    return;
+  }
+
+  // Go up the DOM
+  targetElement = targetElement.parentNode;
+} while (targetElement);
+
+// This is a click outside.
+toggleCheckboxArea(true);
+//console.log('click outside');
+});
+}
+
+function checkboxStatusChange() {
+var multiselect = document.getElementById("mySelectLabel");
+var multiselectOption = multiselect.getElementsByTagName('option')[0];
+
+var values = [];
+var checkboxes = document.getElementById("mySelectOptions");
+var checkedCheckboxes = checkboxes.querySelectorAll('input[type=checkbox]:checked');
+
+for (const item of checkedCheckboxes) {
+var checkboxValue = item.getAttribute('value');
+values.push(checkboxValue);
+}
+
+var dropdownValue = "Select the Location";
+if (values.length > 0) {
+dropdownValue = values.join(', ');
+}
+multiselectOption.innerText = dropdownValue;
+console.log(dropdownValue);
+document.getElementById("pref_lo").value = dropdownValue; 
+}
+
+function toggleCheckboxArea(onlyHide = false) {
+var checkboxes = document.getElementById("mySelectOptions");
+var displayValue = checkboxes.style.display;
+
+if (displayValue != "block") {
+if (onlyHide == false) {
+  checkboxes.style.display = "block";
+}
+} else {
+checkboxes.style.display = "none";
+}
+}
+
+</script>
+
+<script>
+    function onloading() {
+        $('#form1').each(function () { $(this).attr('readonly', true) });
+        $('#form1 :input').prop('readonly', true);
+        $('select').attr('disabled', true);
+        $('#form1 :input').css('background-color', 'transparent');
+        $('#submitbtn').css('display', 'none');
+        $('#submitbtn').prop('diabled', true)
+        $("#inputGroupFile043").prop('disabled', true);
+        $("#inputGroupFile04").prop('disabled', true);
+        $('#editbtn').css({ 'background-color': '#e86240', 'border': 'none', 'width': '100%' })
+    }
+    function editclick() {
+        initMultiselect();
+        console.log("init multiselect");
+        $('#editbtndiv').css('display', 'none');
+        $('#editbtn').prop('disabled', 'true')
+        $('#form1').each(function () { $(this).attr('readonly', false) });
+        $('#form1 :input').prop('readonly', false);
+        $('select').attr('disabled', false);
+        $('#form1 :input').css('background-color', 'none');
+        $("#inputGroupFile043").prop('disabled', false);
+        $("#inputGroupFile04").prop('disabled', false);
+        $('#submitbtn').css({ 'display': 'block', 'diabled': false, 'background-color': '#e86240', 'border': 'none' });
+        document.getElementById("mySelectLabel").onclick=()=>toggleCheckboxArea()
+        alert('Now you can edit the details');
+        
+        // $('#submitbtn').css('display','block');
+        // $('#submitbtn').prop('diabled',false);
+        // $('#submitbtn').css('background-color','#e86240');
+
+    }
+    document.getElementById("mySelectLabel").onclick=()=>{}
+
+    onloading();
+    ///////
+    function check_lo(){
+        let selected_loc = `{{data[0][28] if data[0][28] != '' and data[0][28] != none}}`;
+        let splitted = selected_loc.split(', ');
+        console.log(splitted);
+        for(let element of splitted){
+            if(element == 'Location1')
+            {
+                document.getElementById('one').checked=true;
+            }
+             if(element == 'Location2')
+            {
+                document.getElementById('two').checked=true;
+            }
+             if(element == 'Location3')
+            {
+                document.getElementById('three').checked=true;
+            }
+             if(element == 'Location4')
+            {
+                document.getElementById('four').checked=true;
+            }
+             if(element == 'Location5')
+            {
+                document.getElementById('five').checked=true;
+            }
+             if(element == 'Location6')
+            {
+                document.getElementById('six').checked=true;
+            }
+             if(element == 'Location7')
+            {
+                document.getElementById('seven').checked=true;
+            }
+             if(element == 'Location8')
+            {
+                document.getElementById('eight').checked=true;
+            }
+             if(element == 'Location9')
+            {
+                document.getElementById('nine').checked=true;
+            }
+             if(element == 'Location10')
+            {
+                document.getElementById('ten').checked=true;
+            }
+        }
+    }
+    check_lo();
+</script>
+</body>
+<!-- <script>
     function validateSize(input) {
         const fileSize = input.files[0].size / 1024 / 1024; // in MiB
         if (fileSize > 2) {
@@ -824,7 +1021,6 @@
         }
     }
 </script>
-
 <script>
     function initialize() {
         var input = document.getElementById('address');
@@ -839,7 +1035,6 @@
 
 
 </script>
-
 <script>
     window.onload = (event) => {
         initMultiselect();
@@ -910,7 +1105,20 @@
         }
     }
     console.log()
-</script>
+</script> -->
+<script>
+    function initialize() {
+        var input = document.getElementById('address');
+        new google.maps.places.Autocomplete(input, {
+            componentRestrictions: {
+                country: 'ca'
+            }
+        });
+    }
 
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+
+</script>
 
 </html>
