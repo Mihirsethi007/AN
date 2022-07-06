@@ -33,25 +33,25 @@ firebase_admin.initialize_app(cred)
 app = Flask(__name__,template_folder='templates', static_folder='static')
 
 
-app.config['SECRET_KEY']="sshhh"
-app.config['MYSQL_HOST'] = 'us-cdbr-east-05.cleardb.net'
-app.config['MYSQL_USER'] = 'ba5f66013cf0e7'
-app.config['MYSQL_PASSWORD'] = 'ab61128c'
-app.config['MYSQL_DB'] = 'heroku_0896b250d7433da'
-app.config['UPLOAD_PATH'] = 'upload'
-app.config['UPLOAD_EXTENSIONS'] = ['.pdf',',jpeg']
-app.config['MAX_CONTENT_LENGTH'] = 2048 * 2048
-
-
-
 # app.config['SECRET_KEY']="sshhh"
-# app.config['MYSQL_HOST'] = 'localhost'
-# app.config['MYSQL_USER'] = 'root'
-# app.config['MYSQL_PASSWORD'] = ''
-# app.config['MYSQL_DB'] = 'mihirbhai'
+# app.config['MYSQL_HOST'] = 'us-cdbr-east-05.cleardb.net'
+# app.config['MYSQL_USER'] = 'ba5f66013cf0e7'
+# app.config['MYSQL_PASSWORD'] = 'ab61128c'
+# app.config['MYSQL_DB'] = 'heroku_0896b250d7433da'
 # app.config['UPLOAD_PATH'] = 'upload'
 # app.config['UPLOAD_EXTENSIONS'] = ['.pdf',',jpeg']
 # app.config['MAX_CONTENT_LENGTH'] = 2048 * 2048
+
+
+
+app.config['SECRET_KEY']="sshhh"
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'mihirbhai'
+app.config['UPLOAD_PATH'] = 'upload'
+app.config['UPLOAD_EXTENSIONS'] = ['.pdf',',jpeg']
+app.config['MAX_CONTENT_LENGTH'] = 2048 * 2048
 app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(minutes=5)
 
 TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
@@ -170,7 +170,6 @@ def firebaseFunction():
         decoded_token = decoded_token['phone_number'][1:]
         session.permanent = True
         session['verno'] = decoded_token
-        print("token --> ",decoded_token)
         cursor = mysql.connection.cursor()
         cursor.execute(''' SELECT * FROM admin where phn=%s''',(decoded_token,))
         data = cursor.fetchall()
@@ -231,7 +230,7 @@ def upload_manager_data():
 
 @app.route('/savedata', methods=['POST'])
 def upload_files():
-    if "verno" in session and session['verno'] == request.form["ph_no"]:
+    if "verno" in session:
         print("before try")
         try:
             print("in try")
@@ -335,9 +334,7 @@ def upload_files():
 
 @app.route('/editsavedata', methods=['POST'])
 def edit_upload_files():
-    print(session['verno'])
-    print("phn_no",request.form["ph_no"])
-    if 'verno' in session or session['verno'] == request.form["ph_no"]:
+    if 'verno' in session:
         try:
             full_name = request.form['fullname']
             address = request.form["address"]
@@ -445,8 +442,7 @@ def register():
     ph_no = request.args.get("ph")
     # return render_template('registration.html',ph_no=ph_no)
     if "verno" in session:
-        # if session['verno']==ph_no or session['verno']=="19876543210":
-        if session['verno']==ph_no:
+        if session['verno']==ph_no or session['verno']=="19876543210":
             return render_template('registration2.html',ph_no=ph_no)
         return redirect('/404')
     return redirect(url_for('auth_render'))
@@ -455,7 +451,7 @@ def register():
 def existing():
     ph_no = request.args.get("ph")
     if "verno" in session:
-        if session['verno'] == ph_no or session['role'] == "ver_admin" or session['role'] == "ver_manager":
+        if session['verno'] == ph_no or session['verno'] == '19876543210':
             cursor = mysql.connection.cursor()
             cursor.execute(''' select * from users where phn= %s''',(ph_no,))
             data = cursor.fetchall()
@@ -543,7 +539,7 @@ def example():
 
 @app.route('/getcusdata',methods=["POST"])
 def getcusdata():
-    if 'verno' in session and (session['role'] == "ver_admin" or session['role'] == "ver_manager"):
+    if 'verno' in session and session['verno'] == '19876543210':
         try:
             if request.method == "POST":
                 qtc_data = request.get_json()  
@@ -594,7 +590,7 @@ def getcusdata():
 
 @app.route('/logout',methods=['GET'])
 def logout():
-    if 'verno' in session and (session['role'] == "ver_admin" or session['role'] == "ver_manager"):
+    if 'verno' in session and session['verno'] == "19876543210":
         session.pop('verno')
         return redirect(url_for('welcome'))
     return redirect(url_for('auth_render'))
@@ -619,5 +615,5 @@ def getmandata():
         return jsonify({'status':404,'message':'Cannot talk to database'})
 
 if __name__=="__main__":
-    app.run(debug=True)
-    # app.run(debug=True, host='localhost', port=5)
+    # app.run(debug=True)
+    app.run(debug=True, host='localhost', port=5)
